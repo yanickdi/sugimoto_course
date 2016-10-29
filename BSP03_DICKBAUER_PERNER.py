@@ -9,7 +9,7 @@ X_MAX = 20
 Y_MAX = 30
 
 
-from lib import random_number_from_interval, calculate_distance_matrix, print_matrix
+from lib import random_number_from_interval
 
 def sort_key_function(input):
     # sort according to the points x value -> if its the same, according to the y value
