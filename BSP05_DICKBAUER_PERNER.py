@@ -1,5 +1,5 @@
 """
-    BSP 01 - Wuerfelsimulation
+    BSP 05 - Wuerfelsimulation
     Dickbauer Yanick 1030489, Perner Manuel 0633155
     WS 2016
 """
