@@ -4,19 +4,29 @@ def random_number_from_interval(lower, upper):
     """Returns a random number out of the interval [lower, upper]"""
     val = random.random()
     return lower + (upper -lower) * val
+
+def random_choice(choices):
+    """This function takes a list of choices and randomly picks one out of it and returns the element"""
+    number_of_elements = len(choices)
+    random_position = int(random_number_from_interval(0, number_of_elements))
+    return choices[random_position]
     
-def calculate_distance_matrix(point_list):
-    """ Returns a nxn matrix (list of lists) where n is the length of the point_list
     
-    point_list: Is a list of (x,y) tuples (x and y can be floating point values or integers)
-    Return: Distance matrix, where d_ij is the calculated euclidean distance from point i to point j
+def loaded_random_choice(probability_list):
+    """This stochastic function takes a list as input and returns a random index corresponding to the list.
+    The randomness of the index is loaded: the probality of choosing an index is exactly the corresponding
+    probability given at this index position of the input lix.
+    e.g.: [0.2, 0.8] --> the return value of `0` is 20% likely, the return value of `1` is 80% likely
+    note that the sum of all values in the `probability_list` has to be 1
     """
-    n = len(point_list)
-    matrix = create_matrix(n, n, default_value = 0.0)
+    n = len(probability_list)
+    random_number = random.random()
+    cum_p = 0
     for i in range(n):
-        for j in range(n):
-            matrix[i][j] = euclidean_distance(point_list[i], point_list[j])
-    return matrix
+        cum_p += probability_list[i]
+        if cum_p > random_number:
+            return i
+    return None
     
 def create_matrix(n, m, default_value=None):
     """Returns a nxm list of lists, where each value is None or default param"""
