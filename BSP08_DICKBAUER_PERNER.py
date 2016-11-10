@@ -46,5 +46,5 @@ def main():
                 result[amount] = 1
     
     print(result)
-    
+"meine änderung"
 main()
