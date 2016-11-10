@@ -5,6 +5,7 @@
 """
 # INPUT:
 NUMBER_OF_POINTS = 10
+#max, min:
 X_MAX = 20
 Y_MAX = 30
 
