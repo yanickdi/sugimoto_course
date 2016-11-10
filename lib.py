@@ -28,9 +28,15 @@ def loaded_random_choice(probability_list):
             return i
     return None
     
-def create_matrix(n, m, default_value=None):
-    """Returns a nxm list of lists, where each value is None or default param"""
+def create_matrix(m, n, default_value=None):
+    """Returns a mxn list of lists, where each value is None or default param"""
     matrix = [[default_value for j in range(n)]for i in range(m)]
+    matrix = []
+    for row in range(m):
+        line_list = []
+        for col in range(n):
+            line_list.append(default_value)
+        matrix.append(line_list)
     return matrix
     
 def euclidean_distance(point_1, point_2):
