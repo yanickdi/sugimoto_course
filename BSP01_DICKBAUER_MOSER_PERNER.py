@@ -1,4 +1,4 @@
-"""
+    """
     BSP 01 - Integrierte Zufallszahlen
     Dickbauer Yanick 1030489, Patrick Moser 1114954, Perner Manuel 0633155
     WS 2016
