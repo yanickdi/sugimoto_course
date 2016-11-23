@@ -4,7 +4,7 @@
     WS 2016
 """
 # INPUT:
-NUMBER_OF_SIMULATIONS = 20
+NUMBER_OF_SIMULATIONS = 100
 NUMBER_OF_PARTICIPANTS = 40
 DAYS_IN_A_YEAR = 365
 
@@ -15,7 +15,7 @@ def occurrences(input_list):
     The function returns a dictionary (hash table would be the corresponding type in matlab),
     where each element of the input_list is a key and the number of occurences the values
     e.g.
-      [1,2,3] returns {1: 1, 2: 2, 3: 3}
+      [1,2,3] returns {1: 1, 2: 1, 3: 1}
       [1,1,2] returns {1: 2, 2: 1}
     """
     occ_dict = {}
@@ -35,8 +35,13 @@ def main():
             birthday_list.append( int(random_number_from_interval(0, DAYS_IN_A_YEAR))+1 )
         # count the same candidates:
         occ_dict = occurrences(birthday_list)
+        assert sum(occ_dict.values()) == NUMBER_OF_PARTICIPANTS
         number_of_same_values = sum([value if value >= 2 else 0 for key, value in occ_dict.items()])
         simulation_results.append(number_of_same_values)
+        for key, value in occ_dict.items():
+            if value >= 2:
+                print('Am Tag {} haben {} Personen Geburtstag'.format(key, value))
+        print()
             
         # output
         print('Ergebnisse aus Simulation {}/{}:'.format(simulation+1, NUMBER_OF_SIMULATIONS))
@@ -60,4 +65,5 @@ def main():
     print('Durchschnittlich haben {} von {} Personen am gleichen Tag Geburtstag.'.format(
         avg_number_of_same_birthdays, NUMBER_OF_PARTICIPANTS))
     print('WSKL ueber alle Simulationen: p={}%'.format(simulation_result_p * 100))
+    
 main()
