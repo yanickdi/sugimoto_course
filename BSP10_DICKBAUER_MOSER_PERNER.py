@@ -47,8 +47,12 @@ def main():
     created_code = [4,5,3,2]    #to be replaced by random code for gaming
     #for i in range(NUMBER_OF_ROUNDS):
     bet = ask_user_for_digits()
+    #bet = [4, 2, 0, 0]
     print('Your bet:',bet)
-    if created_code == bet:
+    nr_right, nr_wrong = check_user_input(created_code, bet)
+    print('Nr. of digits on right position: ', nr_right)
+    print('Nr. of digits on right position: ', nr_wrong)
+    if nr_right == len(bet):
         print('yay, your bet equals the secret code:',created_code)
     else: 
         print('fuck')
@@ -60,6 +64,25 @@ def create_code():
         code.append(int(random_number_from_interval(1,6+1)))
     return code
     #print(code)
+    
+    
+def check_user_input(right_digits, user_digits):
+    """Returns two values: (nr_correct_on_pos, nr_correct_on_wrong_pos)
+    i.e. nr_correct_on_pos is the number of correct values on the right pos
+         nr_correct_on_wrong_pos is the --.-- on the wrong position"""
+    nr_right_pos = 0
+    nr_wrong_pos = 0
+    assert len(right_digits) == len(user_digits)
+    for i in range(len(user_digits)):
+        act_digit = user_digits[i]
+        if act_digit == right_digits[i]:
+            # this digit is on the right position!
+            nr_right_pos += 1
+        elif act_digit in right_digits:
+            # this digit is not on the right position,
+            # but at least it is part of the right digits
+            nr_wrong_pos += 1
+    return nr_right_pos, nr_wrong_pos
 
 def check_for_break():
     print('Abbruchkriterien programmieren!')    #Abbruch nach einer bestimmten Anzahl an Runden/NUMBER_OF_ROUNDS
