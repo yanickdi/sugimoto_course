@@ -72,6 +72,5 @@ def variance(value_list):
     for value in value_list:
         summands.append((value - mean)**2)
     return mean_value(summands)
-    
-#print(get_score(9,4))
+
 main()
