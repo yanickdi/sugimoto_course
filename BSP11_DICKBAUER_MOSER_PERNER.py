@@ -12,9 +12,18 @@ OPTIONS = ['scissors', 'rock', 'paper']
 
 choices = []
 scores = [0, 0]
+game_count = 0
 
 def main():
-    pass
+    for i in range(NUMBER_OF_GAMES):
+        game_count = 0
+        if game_count < NUMBER_OF_GAMES:
+            choice_cpu()
+            choice_user()
+            game_count += 1
+        
+        
+    print(choices)
 
 def choice_cpu():
     """This function creates and returns the CPU's choice."""
@@ -42,12 +51,5 @@ def compare():
         scores[1] += 1
     elif choices[0] == OPTIONS[1] and choices[1] == OPTIONS[2]: # p->r
         scores[0] += 1
-        
 
-choice_cpu()
-choice_user()
-compare()
-print(choices)
-print(scores)
-
-#main()
+main()
