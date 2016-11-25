@@ -30,35 +30,59 @@ You will be asked to enter a 4-digit bet with integer values between 1 and 6.
 
 The computer will give you hints about your guess.
 
-Are you ready to play?
-Enter y, if you are ready to play, or n if not.
+                          Are you ready to play?
+            (Enter y, if you are ready to play, or n to quit.)
 """)
+
+WIN_MESSAGE = ("""
+                      ##############################
+                      # ************************** #
+                      # *        SUCCESS!        * #
+                      # * ---------------------- * #
+                      # *    YOU ARE GENIUS!     * #
+                      # * YOU  CRACKED THE CODE! * #
+                      # ************************** #
+                      ##############################
+""")
+
+LOOSE_MESSAGE = ("""
+                      ##############################
+                      # ************************** #
+                      # *       YOU LOOSE!       * #
+                      # * ---------------------- * #
+                      # * YOU RAN OUT OF ROUNDS. * #
+                      # *      TRY AGAIN!?       * #
+                      # ************************** #
+                      ##############################
+""")
+
 
 #INPUT:
 NUMBER_OF_ROUNDS = 10
-NUMBER_OF_TIPS = 4
 NUMBERS = [1, 2, 3, 4, 5, 6]    #numbers used in this game
 NUMBER_OF_NUMBERS = 6   #TODO for code testing only 
 
 def main():
     print(INTRO)
     
+    answer = keep_going()
     #created_code = create_code()   #given by a defined variable
     created_code = [4,5,3,2]    #to be replaced by random code for gaming
     #for i in range(NUMBER_OF_ROUNDS):
+
     bet = ask_user_for_digits()
     #bet = [4, 2, 0, 0]
     print('Your bet:',bet)
     nr_right, nr_wrong = check_user_input(created_code, bet)
-    print('Nr. of digits on right position: ', nr_right)
-    print('Nr. of digits on right position: ', nr_wrong)
+    print('Hint:', 'o'*nr_right,'x'*nr_wrong)
     if nr_right == len(bet):
-        print('yay, your bet equals the secret code:',created_code)
+        print('Your guess of ,',bet,' equals the secret code!')
+        print(WIN_MESSAGE)
     else: 
         print('fuck')
     
 def create_code():
-    """This function creates a random 4-digit code with out of the numbers 1 to 6"""    
+    """This function creates a random 4-digit code out of the numbers 1 to 6"""    
     code = []
     for i in range(4):
         code.append(int(random_number_from_interval(1,6+1)))
@@ -92,6 +116,7 @@ def ask_user_for_digits():
     for i in range(4):
         digit = int(input('Please enter digit #{}: '.format(i+1)))
         digits.append(digit)
+        print(digits)
     return digits
 
 def check_if_user_wants_to_play():
@@ -100,5 +125,15 @@ def check_if_user_wants_to_play():
         return True
     else:
         return False
+
+def keep_going():
+    answer = input("                                 y/n: ")
+    if answer == "y":
+        print("                               Let's play!\n")
+    elif answer == "n":
+        print("                                Bye, bye!")
+        raise SystemExit
+    else:
+        answer = keep_going()
 
 main()
