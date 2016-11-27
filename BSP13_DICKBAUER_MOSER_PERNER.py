@@ -14,6 +14,7 @@ def main():
     # user input:
     simulations = user_input((
         ('Number of simulations', int, 10000), ),DEBUG)[0]
+        
     count = 0 # how often did we shoot in the unit circle
     
     for i in range(simulations):
