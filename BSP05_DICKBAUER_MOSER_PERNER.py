@@ -3,7 +3,6 @@
     Dickbauer Yanick 1030489, Patrick Moser 1114954, Perner Manuel 0633155
     WS 2016
 """
-# INPUT:
 MAX_NUMBER_OF_GUESSES = 6
 
 from lib import random_number_from_interval
@@ -13,7 +12,7 @@ def main():
     right_guesses = 0
     random_die = int(random_number_from_interval(0, 6)+1)
     
-    while attempt < 6:
+    while attempt < MAX_NUMBER_OF_GUESSES:
         attempt += 1
         guess = int(input('Rate: '))
         if guess == random_die:
