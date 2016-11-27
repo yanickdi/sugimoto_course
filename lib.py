@@ -67,7 +67,7 @@ def user_input(input_vars, use_defaults=False):
                         ('How old are you', int, 20)             
     """
     if use_defaults:
-        return (elem[2] for elem in input_vars)
+        return tuple(elem[2] for elem in input_vars)
     
     values = []
     for elem in input_vars:
