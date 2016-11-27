@@ -5,18 +5,18 @@
     
     Comment: see Monte-Carlo-Simulation Wikipedia
 """
+from lib import random_number_from_interval, euclidean_distance, user_input
 
-from lib import random_number_from_interval, euclidean_distance
-
-
-# INPUT:
-SIMULATIONS = 100000
+DEBUG = False
 REFERENCE_PI = 3.14159265
 
 def main():
+    # user input:
+    simulations = user_input((
+        ('Number of simulations', int, 10000), ),DEBUG)[0]
     count = 0 # how often did we shoot in the unit circle
     
-    for i in range(SIMULATIONS):
+    for i in range(simulations):
         # create two randoms representing cords in a [1,1] rectangle
         x = random_number_from_interval(0,1)
         y = random_number_from_interval(0,1)
@@ -25,7 +25,7 @@ def main():
             count += 1
         
     # avg_occurrences p should be pi/4 / 1 --> 4 * avg = pi
-    avg_occurrences = count/SIMULATIONS
+    avg_occurrences = count/simulations
     pi = avg_occurrences * 4
     print('Pi is simulated:', pi)
     print('Difference:     {:+.5f} %'.format((pi/REFERENCE_PI - 1) * 100))
