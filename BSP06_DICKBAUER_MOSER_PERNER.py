@@ -3,7 +3,6 @@
     Dickbauer Yanick 1030489, Patrick Moser 1114954, Perner Manuel 0633155
     WS 2016
 """
-# INPUT:
 RIGGED_DICE_PROBS = (1/10, 1/20, 1/5, 1/10, 1/2, 1/20)
 NUMBER_OF_THROWS = 1000
 
