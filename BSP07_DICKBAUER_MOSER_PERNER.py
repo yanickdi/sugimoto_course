@@ -13,6 +13,7 @@ def main():
     # user input
     (number_of_steps, ) = user_input((
         ('Number of steps', int, 2000), ), DEBUG)
+        
     pos = list(START_POSITION)
     for i in range(number_of_steps):
         # get a random direction
