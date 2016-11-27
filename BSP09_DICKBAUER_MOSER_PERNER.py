@@ -3,20 +3,21 @@
     Dickbauer Yanick 1030489, Moser Patrick 1114954, Perner Manuel 0633155
     WS 2016
 """
+from lib import random_number_from_interval, user_input
 
-from lib import random_number_from_interval
-
-
-# INPUT:
-NUMBER_OF_SERIES = 200
+DEBUG = True
 
 NUMBER_OF_SHOTS = 60
 
-def main():    
+def main():
+    # user input:
+    number_of_series = user_input((
+        ('Number of series', int, 200), ), DEBUG)[0]
+    
     avg_score_list_normal = []
     avg_score_list_competition = [] 
     
-    for i in range(NUMBER_OF_SERIES):
+    for i in range(number_of_series):
         score_list_serie_normal = []
         score_list_serie_competition = []
         for j in range(NUMBER_OF_SHOTS):
