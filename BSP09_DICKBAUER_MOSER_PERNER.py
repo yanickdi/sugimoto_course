@@ -69,6 +69,14 @@ def get_score(x, y):
         return 1
     else:
         return 0
+        
+def get_score_nerdy(x, y):
+    func_val = x**2 + y**2
+    boundaries = (1, 4, 9, 16, 25, 36, 49, 64, 81, 100)
+    for points in range(10, 0, -1):
+        if func_val <= boundaries[len(boundaries) - points]:
+            return points
+    return 0
 
 def mean_value(value_list):
     return sum(value_list)/len(value_list)
