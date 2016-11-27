@@ -55,3 +55,33 @@ def print_matrix(matrix, ndigits_round=2):
     """Prints a list of lists of floats beautiful to stdout. """
     for line in matrix:
         print(''.join(['{:7}'.format(round(elem, ndigits_round)) for elem in line]))
+        
+        
+def user_input(input_vars, use_defaults=False):
+    """
+        This function returns a tuple of values, given by the user_input
+        
+        input_vars : a tuple of tuples, each inner tuple must have 3 values:
+                        (text, type, default_value)
+                     e.g.
+                        ('How old are you', int, 20)             
+    """
+    if use_defaults:
+        return (elem[2] for elem in input_vars)
+    
+    values = []
+    for elem in input_vars:
+        valid = False
+        while not valid:
+            try:
+                inp_val = input(elem[0] + ': ')
+                type = elem[1]
+                if type == int:
+                    inp_val = int(inp_val)
+                elif type == float:
+                    inp_val = float(inp_val)
+                valid = True
+            except ValueError:
+                print(inp_val, 'is not valid, please try again')
+        values.append(inp_val)
+    return tuple(values)

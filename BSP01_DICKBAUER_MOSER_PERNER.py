@@ -3,16 +3,20 @@
     Dickbauer Yanick 1030489, Moser Patrick 1114954, Perner Manuel 0633155
     WS 2016
 """
-# INPUT:
-NUMBER_OF_RANDOM_VALUES = 10
-INTERVAL = [2, 4]
+DEBUG = False
 
 
-from lib import random_number_from_interval
+from lib import random_number_from_interval, user_input
 
 def main():
-    for i in range(NUMBER_OF_RANDOM_VALUES):
-        value = random_number_from_interval(INTERVAL[0], INTERVAL[1])
+    # get user input:
+    number_of_random_values, interval_from, interval_to = user_input((
+            ('Number of random values', int, 10),
+            ('Interval from', float, 2.0),
+            ('Interval to',   float, 4.0)), use_defaults=DEBUG)
+            
+    for i in range(number_of_random_values):
+        value = random_number_from_interval(interval_from, interval_to)
         print('{:.2f}'.format(value))
 
         
