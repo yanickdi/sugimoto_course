@@ -3,37 +3,44 @@
     Dickbauer Yanick 1030489, Patrick Moser 1114954, Perner Manuel 0633155
     WS 2016
 """
-# INPUT:
-OPTION = True #Print every iteration
-NUMBER_OF_BETS = 5
+DEBUG = False
+OPTION = True # enables optional feature: print all draws, bets
+               # and number of right values
+              
 
 LOTTERY_MIN_VALUE = 1
 LOTTERY_MAX_NUMBER = 45
+LOTTO_FULL_MATCH = 6
 
-from lib import random_choice
+from lib import random_choice, user_input
 
 def main():
+    # user input:
+    number_of_bets = user_input((
+        ('Number of bets', int, 8000),), DEBUG)[0]
     draw = lottery_numbers()
-    print('Draw: {}\n'.format(draw))
-    result = {1:0, 2:0, 3:0, 4:0, 5:0, 6:0}
-    for i in range(NUMBER_OF_BETS):
+    print('Draw: {}\n'.format(pretty_bet_string(draw)))
+    result = {i:0 for i in range(1, LOTTO_FULL_MATCH+1)}
+    for i in range(number_of_bets):
         guessed_numbers = lottery_numbers()
         amount, match_list = check_lottery_ticket(draw, guessed_numbers)
         if amount > 0:
             result[amount] += 1
         if OPTION:
-            beatiful_str = ', '.join('{:2d}'.format(numb) for numb in guessed_numbers)
-            print('Tip: {}, {} hits'.format(beatiful_str, amount))
+            print('Bet: {}, {} hits'.format(pretty_bet_string(guessed_numbers), amount))
     if OPTION:
         print()
     
     for key, value in result.items():
         theoretical_p = lotto_probability(key)
-        simulated_p = value / NUMBER_OF_BETS
+        simulated_p = value / number_of_bets
         print('{} hits:'.format(key))
         print('  {:.8f}% in simulation ({} times)'.format(simulated_p*100, value))
         print('  {:.8f}% theoretical probability\n'.format(theoretical_p*100))
     #print(result)
+
+def pretty_bet_string(bet):
+    return ', '.join('{:2d}'.format(numb) for numb in bet)
 
 def lottery_numbers():
     """returns six random numbers between LOTTERY_MIN_VALUE and LOTTERY_MAX_NUMBER (a list)
@@ -68,9 +75,9 @@ def bin_coeff(n, k):
     return int(fact(n)/(fact(k)*fact(n-k)))
 
 def lotto_probability(k):
-    wanted_combinations = bin_coeff(6, k)
-    compl_wanted_comb = bin_coeff(39, 6-k)
-    all_comb = bin_coeff(45, 6)
+    wanted_combinations = bin_coeff(LOTTO_FULL_MATCH, k)
+    compl_wanted_comb = bin_coeff(LOTTERY_MAX_NUMBER - LOTTO_FULL_MATCH, LOTTO_FULL_MATCH-k)
+    all_comb = bin_coeff(LOTTERY_MAX_NUMBER, LOTTO_FULL_MATCH)
     return (wanted_combinations * compl_wanted_comb) / all_comb
 
 
