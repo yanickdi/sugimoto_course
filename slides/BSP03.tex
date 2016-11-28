@@ -125,4 +125,16 @@ Style2*=$\bullet$ ,Style3*=$\circ$ ,Style4*=\tiny$\blacksquare$ )
 \end{easylist}
 \end{frame}
 
+\begin{frame}[fragile]{Anhang: Modifikation des Source Codes um Demo Beispiel zu erhalten}
+  \begin{lstlisting}[language=python]
+  # Aendere random_number_from_interval() in lib.py wie folgt:
+ZZ = [5,9,2,7,5,8,3,4,3,3,9,1,1,7,7,2,3,1]
+i = -1
+def random_number_from_interval(lower, upper):
+    global i
+    i += 1
+    return ZZ[i]
+  \end{lstlisting}
+\logopythonbottom
+\end{frame}
 \end{document}

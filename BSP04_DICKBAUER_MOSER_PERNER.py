@@ -4,7 +4,7 @@
     WS 2016
 """
 DEBUG = False
-OPTION = False # enables optional feature: print all birthdays and
+OPTION = True # enables optional feature: print all birthdays and
                # mark those which occure more than twice
 DAYS_IN_A_YEAR = 365
 
@@ -29,8 +29,8 @@ def occurrences(input_list):
 def main():
     #user input:
     number_of_simulations, number_of_participants = user_input((
-        ('Number of simulations', int, 100),
-        ('Number of participants', int, 40)), DEBUG)
+        ('Number of simulations', int, 2),
+        ('Number of participants', int, 10)), DEBUG)
         
     simulation_results = []
     for simulation in range(number_of_simulations):
