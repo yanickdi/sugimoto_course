@@ -1,0 +1,19 @@
+\begin{frame}[fragile]{Funktion user\_input(input\_vars, [use\_defaults])}
+  \begin{itemize}
+  	\item Diese Funktion verlang vom User die geforderten Eingabeparameter und gibt diese als von der Programmiererin gewünschten Datentyp wieder zurück
+    \item Funktion verlangt als ersten Eingabeparameter die Liste \textit{input\_vars}
+    \item Falls \textit{use\_defaults == True} wird der User nicht nach Eingabe gefragt (Dient zum Testen)
+    \item Diese Liste besteht wiederrum aus Listen mit je Länge = 3:
+    \begin{itemize}
+    	\item 0: Text, welcher dem User ausgegeben wird
+    	\item 1: Datentyp (int/float/str)
+    	\item 2: Default value: Dieser Wert wird zurueckgegeben, falls \textit{use\_defaults == True}
+    \end{itemize}
+  \end{itemize}
+  \begin{lstlisting}[language=python]
+x, y = user_input((
+    ('Geben Sie einen X Wert ein', int, 10),
+    ('Geben Sie einen Y Wert ein', int,  5), False):
+  \end{lstlisting}
+  \logopythonbottom
+\end{frame}	

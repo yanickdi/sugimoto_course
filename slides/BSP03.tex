@@ -3,7 +3,7 @@
 \title[BSP03 - Sortierung ZZ]{Sortierung von Zufallszahlen}
 \author{Dickbauer Y., Moser P., Perner M.}
 \institute{PS Computergestützte Modellierung, WS 2016/17}
-\date{Date of Presentation}
+%\date{Date of Presentation}
 
 \begin{document}
 
@@ -37,6 +37,92 @@
 \begin{frame}{Flow Chart}
 	\centering
   	\includegraphics[scale=0.4]{BSP03_Flow_Chart_2.pdf}
+\end{frame}
+
+\section{Programmcode}
+\subsection{Main Funktion}
+\begin{frame}[fragile]{Main Funktion - Programmeinstieg}
+  \begin{lstlisting}[language=python]
+def main():
+    # user input:
+    inp = user_input((
+        ('Number of points', int, 10),), DEBUG)
+    number_of_points = inp[0]
+    
+    # generate points:
+    point_list = []
+    for i in range(number_of_points):
+        point_x = random_number_from_interval(1, X_MAX)
+        point_y = random_number_from_interval(1, Y_MAX)
+        point = (point_x, point_y)
+        point_list.append(point)
+        
+    # sort
+    sorted_point_list = sorted(point_list, key=sort_key_function)
+    
+    # output
+    for x, y in sorted_point_list:
+        print('x: {:5f}\ty: {:5f}'.format(round(x, 2), round(y, 2)))
+\end{lstlisting}
+\logopythonbottom
+\end{frame}
+
+\subsection{Verwendete Funktionen}
+\include{lib_random_number_from_interval}
+\include{lib_user_input}
+
+\section{Beispiel}
+\begin{frame}{Beispiel anhand fixer Zufallszahlen}
+\begin{itemize}
+\item X\_MAX = 10, Y\_MAX = 10
+\item Usereingabe: number\_of\_points := 8
+\item Annahme der Zufallszahlen wie folgt:
+\end{itemize}
+\begin{center}
+  \begin{tabular}{c|c|c|c|c|c|c|c|c|c}
+  \hline 
+  i & 0 & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 \\ 
+  \hline 
+  ZZ fuer X & 5 & 2 & 5 & 3 & 3 & 9 & 1 & 7 & 3\\ 
+  ZZ fuer Y & 9 & 7 & 8 & 4 & 3 & 1 & 7 & 2 & 1\\
+  \hline 
+  \end{tabular} 
+\end{center}
+\end{frame}
+
+\begin{frame}[fragile]{Beispiel anhand fixer Zufallszahlen}
+For-Schleife zum Erzeugen der point\_list:
+\begin{easylist}
+\ListProperties(Hide=100, Hang=true, Progressive=3ex, Style*= ,
+Style2*=$\bullet$ ,Style3*=$\circ$ ,Style4*=\tiny$\blacksquare$ )
+& i := 0
+&& point\_x := 5, point\_x := 9 
+&& point\_list := [(5,9)]
+& i := 1
+&& point\_x := 2, point\_x := 7 
+&& point\_list := [(5,9), (2,7)]
+& i := 2
+&& point\_x := 5, point\_x := 8 
+&& point\_list := [(5,9), (2,7), (5,8)]
+& ...
+& i := 8
+&& point\_x := 3, point\_x := 1 
+&& point\_list := [(5,9),(2,7),(5,8),(3,4),(3,3),(9,1),(1,7),(7,2),(3,1)]
+\end{easylist}
+\end{frame}
+
+\begin{frame}[fragile]{Beispiel anhand fixer Zufallszahlen}
+Sortieren der point\_list:
+\begin{easylist}
+\ListProperties(Hide=100, Hang=true, Progressive=3ex, Style*=-- ,
+Style2*=$\bullet$ ,Style3*=$\circ$ ,Style4*=\tiny$\blacksquare$ )
+& point\_list hat nun die Länge 8 mit je (x,y) Tuples als Eintrag
+& sorted() ist eine built-in Funktion, welche einen \textit{key} benötigt, um zu wissen, wie sie die Listeneinträge sortieren soll
+&& Als Key wird nun einfach (x,y) gegeben, das Sortieren geht nun automatisch aufsteigend zuerst nach x, danach nach y (comperator gibt es in python ab Version 3 nicht mehr)\footnote[frame] {\scriptsize\url{https://docs.python.org/3.5/library/functions.html\#sorted}}
+&& Alternativlösung: Zuerst nach key y sortieren, danach nach x
+& sorted\_point\_list :=
+&& [(1,7), (2,7), (3,3), (3,4), (5,8), (5,9), (7,2), (9,1)]
+\end{easylist}
 \end{frame}
 
 \end{document}

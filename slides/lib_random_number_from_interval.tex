@@ -1,0 +1,14 @@
+\begin{frame}[fragile]{Funktion random\_number\_from\_interval(..)}
+  \begin{itemize}
+    \item Diese Funktion verlangt zwei Eingabeparameter \textit{lower} und \textit{upper}
+    \item Gibt eine (pseudo)Zufallszahl (\textit{float}) im Intervall  [\textit{lower}, \textit{upper}) zurück 
+    \item \textit{random.random()} ist eine Funktion der Python Standardbibliothek, welche ein Zufallszahl (\textit{float}) im Intervall [\textit{lower}, \textit{upper}) zurück gibt
+    \item Mersenne Twister Methode wird als Generator der ZZ verwendet\footnote[frame] {\scriptsize\url{https://docs.python.org/3.5/library/random.html}} \footnote[frame] {\scriptsize\url{https://en.wikipedia.org/wiki/Mersenne_Twister}}
+  \end{itemize}
+  \begin{lstlisting}[language=python]
+def random_number_from_interval(lower, upper):
+    val = random.random()
+    return lower + (upper -lower) * val
+\end{lstlisting}
+\logopythonbottom
+\end{frame}	
