@@ -1,0 +1,123 @@
+\include{settings}
+
+\title[BSP05 - Würfelsimulation]{Würfelsimulation}
+\author{Dickbauer Y., Moser P., Perner M.}
+\institute{PS Computergestützte Modellierung, WS 2016/17}
+%\date{Date of Presentation}
+
+\begin{document}
+
+\begin{frame}
+  \titlepage
+\end{frame}
+
+% Uncomment these lines for an automatically generated outline.
+\begin{frame}{Outline}
+  \tableofcontents
+\end{frame}
+
+\section{Aufgabenstellung}
+\begin{frame}{Aufgabenstellung}
+Der Benutzer
+darf sechsmal eine Zahl raten. Wenn die Zahl größer bzw. kleiner ist als die vom Rechner
+gewürfelte Zahl, dann wird dies dem Benutzer jeweils mitgeteilt. Bei richtiger Eingabe
+der Zahl gratuliert der Rechner dem Benutzer. Hat der Benutzer mindestens zweimal
+richtig oder nie richtig geraten, gibt es spezielle Glückwünsche bzw. Bedauern des Rechners.
+
+\begin{itemize}
+  \item Eingabe: geratene Zahl (insgesamt 6x)
+  \item Output: Rückmeldung je Durchgang, Endergebnis
+\end{itemize}
+
+\end{frame}
+
+\section{Flow Chart}
+\begin{frame}{Flow Chart}
+	\centering
+  	\includegraphics[scale=0.3]{BSP05_Flow_Chart_1.pdf}
+\end{frame}
+\section{Flow Chart}
+
+\section{Programmcode}
+\subsection{Main Funktion}
+\begin{frame}[fragile]{Main Funktion - Programmeinstieg}
+  \begin{lstlisting}[language=python]
+def main():
+    attempt = 0
+    right_guesses = 0
+    random_die = int(random_number_from_interval(0, 6)+1)
+    
+    while attempt < MAX_NUMBER_OF_GUESSES:
+        attempt += 1
+        guess = int(input('Rate: '))
+        if guess == random_die:
+            print('Richtig, du bekommst einen neuen Wuerfel')
+            right_guesses += 1
+            random_die = int(random_number_from_interval(0, 6)+1)
+        else:
+            less_or_greater = 'kleiner' if random_die < guess else 'groesser'
+            print('Nein, gesuchte Zahl ist {} als {}.'.format(less_or_greater, guess))
+    
+\end{lstlisting}
+\logopythonbottom
+\end{frame}
+
+\begin{frame}[fragile]{Main Funktion - Ausgabe der Ergebnisse}
+  \begin{lstlisting}[language=python]
+    # print result
+    print('{} mal richtig geraten'.format(right_guesses))
+    if right_guesses == 0:
+        print('Kein einziges Mal richtig bei {} Versuchen ist halt kein guter Schnitt...'.format(MAX_NUMBER_OF_GUESSES))
+    elif right_guesses >= 2:
+        print('Super, mindestens zwei mal richtig, gut gemacht!')
+\end{lstlisting}
+\logopythonbottom
+\end{frame}
+
+\subsection{Verwendete Funktionen}
+\include{lib_random_number_from_interval}
+%\include{lib_user_input}
+
+\section{Beispiel}
+\begin{frame}[fragile]{Beispiel anhand fixer Zufallszahlen}
+\begin{itemize}
+	\item Annahme folgender ZZ und Eingaben:
+	\begin{center}
+  \begin{tabular}{c|c|c|c|c|c|c}
+  \hline 
+  Iteration & 0 & 1 & 2 & 3 & 4 & 5\\ 
+  \hline 
+  ZZ vor iteration    & 3  &  &  & 1  &  & \\ 
+  Usereingabe guess  & 1  & 2 & 3 & 4 & 5 & 6 \\ 
+  \hline 
+  \end{tabular} 
+\end{center}
+\end{itemize}
+\begin{easylist}
+\ListProperties(Hide=100, Hang=true, Progressive=3ex, Style*= ,
+Style2*=$\bullet$ ,Style3*=$\circ$ ,Style4*=\tiny$\blacksquare$ )
+& Iteration 0:
+&& User gibt 1 ein, ZZ ist 3, Programm meldet 'zu niedrig'
+&& attempt := 1, right\_guesses := 0
+& Iteration 1:
+&& User gibt 2 ein, ZZ ist 3, Programm meldet 'zu niedrig'
+&& attempt := 2, right\_guesses := 0
+& Iteration 2:
+&& User gibt 3 ein, ZZ ist 3, Programm meldet 'passt'
+&& attempt := 1, right\_guesses := 0
+&& Neuberechnung random\_die := 1
+\end{easylist}
+\end{frame}
+
+\begin{frame}[fragile]{Anhang: Modifikation des Source Codes um Demo Beispiel zu erhalten}
+  \begin{lstlisting}[language=python]
+  # Aendere random_number_from_interval() in lib.py wie folgt:
+i = -1
+ZZ = [3,1] + list(range(1,10))
+def random_number_from_interval(lower, upper):
+    global i; i += 1;
+    return ZZ[i]-1
+  \end{lstlisting}
+\logopythonbottom
+\end{frame}
+\end{document}
