@@ -88,7 +88,7 @@ def main():
   Iteration & 0 & 1 & 2 & 3 & 4 & 5\\ 
   \hline 
   ZZ vor iteration    & 3  &  &  & 1  &  & \\ 
-  Usereingabe guess  & 1  & 2 & 3 & 4 & 5 & 6 \\ 
+  Usereingabe guess  & 1  & 2 & 3 & 4 & 3 & 1 \\ 
   \hline 
   \end{tabular} 
 \end{center}
@@ -96,16 +96,33 @@ def main():
 \begin{easylist}
 \ListProperties(Hide=100, Hang=true, Progressive=3ex, Style*= ,
 Style2*=$\bullet$ ,Style3*=$\circ$ ,Style4*=\tiny$\blacksquare$ )
+\only<1>{
 & Iteration 0:
-&& User gibt 1 ein, ZZ ist 3, Programm meldet 'zu niedrig'
+&& User gibt 1 ein, ZZ ist 3: Programm meldet 'zu niedrig'
 && attempt := 1, right\_guesses := 0
 & Iteration 1:
-&& User gibt 2 ein, ZZ ist 3, Programm meldet 'zu niedrig'
+&& User gibt 2 ein, ZZ ist 3: Programm meldet 'zu niedrig'
 && attempt := 2, right\_guesses := 0
 & Iteration 2:
-&& User gibt 3 ein, ZZ ist 3, Programm meldet 'passt'
-&& attempt := 1, right\_guesses := 0
+&& User gibt 3 ein, ZZ ist 3: Programm meldet 'passt'
+&& attempt := 3, right\_guesses := 1
 && Neuberechnung random\_die := 1
+}\only<2>{
+& Iteration 3:
+&& User gibt 4 ein, ZZ ist 1: Programm meldet 'zu hoch'
+&& attempt := 4, right\_guesses := 1
+& Iteration 4:
+&& User gibt 3 ein, ZZ ist 1, Programm meldet 'zu hoch'
+&& attempt := 5, right\_guesses := 1
+& Iteration 5:
+&& User gibt 1 ein, ZZ ist 1, Programm meldet 'passt'
+&& attempt := 6, right\_guesses := 2
+& While Schleife wird an dieser Stelle beendet, da $attempt \geq 6$
+}\only<3>{
+\vspace{1cm}
+&& Ausgabe, dass 2 richtige sind
+&& right\_guesses == 2 $\Longrightarrow$ dem User wird gratuliert 
+}
 \end{easylist}
 \end{frame}
 
