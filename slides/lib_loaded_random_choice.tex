@@ -1,0 +1,20 @@
+\begin{frame}[fragile]{Funktion loaded\_random\_choice(..)}
+  \begin{itemize}
+    \item Diese Funktion verlangt eine WSKL Liste als Eingabeparameter
+    \item Gibt einen Index zurück, welcher 0 bis $\left\vert{probality\_list}\right\vert-1$ sein kann.
+    \item Diese Indizes haben eine gewichtete WSKL, welche jeweils an der Position in der Eingabeliste steht
+    \item Beispiel probility\_list := [ 0.9, 0.1 ]  $\Rightarrow$ mit p=90\% wird 0 zurückgegeben, p=10\% für 1
+  \end{itemize}
+  \begin{lstlisting}[language=python]
+def loaded_random_choice(probability_list):
+    n = len(probability_list)
+    random_number = random.random()
+    cum_p = 0
+    for i in range(n):
+        cum_p += probability_list[i]
+        if cum_p > random_number:
+            return i
+    return None
+\end{lstlisting}
+\logopythonbottom
+\end{frame}	
