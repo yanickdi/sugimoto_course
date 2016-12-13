@@ -1,5 +1,5 @@
 """
-    BSP13 - Simulation von PI
+    BSP 13 - Simulation von PI
     Dickbauer Yanick 1030489, Moser Patrick 1114954, Perner Manuel 0633155
     WS 2016
     
