@@ -6,9 +6,12 @@
 
 from lib import create_matrix, print_matrix
 
-matrix = [[ 0.4, 0.3, 0.2, 0.1], 
-          [0.2, 0.5, 0.2, 0.1], 
-          [0.1, 0.3, 0.3, 0.3], 
-          [0.2, 0.3, 0.1, 0.4]]
+trans_matrix = [[ 0.4, 0.3, 0.2, 0.1],  #Karibik
+               [0.2, 0.5, 0.2, 0.1],    #Kenia
+               [0.1, 0.3, 0.3, 0.3],    #Thailand
+               [0.2, 0.3, 0.1, 0.4]]    #Nepal
+          
  
 print_matrix(matrix, ndigits_round=2)
+
+main()
