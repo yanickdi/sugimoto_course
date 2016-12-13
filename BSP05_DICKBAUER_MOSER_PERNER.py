@@ -1,6 +1,6 @@
 """
     BSP 05 - Wuerfelsimulation
-    Dickbauer Yanick 1030489, Patrick Moser 1114954, Perner Manuel 0633155
+    Dickbauer Yanick 1030489, Moser Patrick 1114954, Perner Manuel 0633155
     WS 2016
 """
 MAX_NUMBER_OF_GUESSES = 6
