@@ -74,7 +74,9 @@ def user_input(input_vars, use_defaults=False):
         valid = False
         while not valid:
             try:
-                inp_val = input(elem[0] + ': ')
+                inp_val = input('{} [default is {}]: '.format(elem[0], elem[2]))
+                if inp_val == '':
+                    inp_val = str(elem[2])
                 type = elem[1]
                 if type == int:
                     inp_val = int(inp_val)

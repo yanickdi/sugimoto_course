@@ -4,52 +4,78 @@
     WS 2016
 """
 
-from lib import random_number_from_interval
+from lib import user_input, random_number_from_interval
+
+DEBUG = False
 
 #INPUT:
-NUMBER_OF_GAMES = 5
-OPTIONS = ['scissors', 'rock', 'paper']
+OPTIONS = ['rock', 'paper', 'scissors']
 
-choices = []
-scores = [0, 0]
-game_count = 0
+OPTION_ROCK = 0
+OPTION_PAPER = 1
+OPTION_SCISSORS = 2
+
+CPU = 0
+USER = 1
+DRAW = 2
+
+ROUND_MSG = ['CPU won the round', 'You won the round', 'Round was draw']
 
 def main():
-    for i in range(NUMBER_OF_GAMES):
-        game_count = 0
-        if game_count < NUMBER_OF_GAMES:
-            choice_cpu()
-            choice_user()
-            game_count += 1
+    win_score = user_input([['Please enter the score to win the game', int, 3]], DEBUG)[0]
+    
+    scores = [0, 0]
+    while max(scores) < win_score:
+        cpu = choice_cpu()
+        user = choice_user()
+        round_winner = compare(cpu, user)
+        if round_winner == DRAW:
+            pass
+        else:
+            scores[round_winner] += 1
+            
+        print(ROUND_MSG[round_winner])
         
-        
-    print(choices)
+        print('Score: cpu {} vs. {} you\n'.format(scores[CPU], scores[USER]))
+    
+    who_won = scores.index(max(scores))
+    if who_won == CPU:
+        print('CPU won the game')
+    else:
+        print('USER won the game')
 
 def choice_cpu():
     """This function creates and returns the CPU's choice."""
-    choices.append('rock')
-    #choices.append(OPTIONS[int(random_number_from_interval(0,len(OPTIONS)))])
+    cpu = int(random_number_from_interval(0,len(OPTIONS)))
+    if DEBUG:
+        print('Hint: CPU chose {}'.format(OPTIONS[cpu]))
+    return cpu
 
 def choice_user():
     """This function asks the user for his/her choice and returns it."""
-    print(OPTIONS)
-    choices.append(input('Choose an item from the list above: '))
+    valid = False
+    while not valid:
+        option_string = '/'.join(OPTIONS)
+        user_input = input('Choose an item out of {}: '.format(option_string)).lower()
+        if user_input in OPTIONS:
+            valid = True
+        else:
+            print('Incorrect input, please choose again.')
+    return OPTIONS.index(user_input)
+    
 
-def compare():
-    """This function compares the random CPU-choice with the user's input."""
-    if choices[0] == choices[1]:
-        print('Draw!')
-    elif choices[0] == OPTIONS[0] and choices[1] == OPTIONS[1]: # s->r
-        scores[1] += 1
-    elif choices[0] == OPTIONS[1] and choices[1] == OPTIONS[0]: # r->s
-        scores[0] += 1
-    elif choices[0] == OPTIONS[0] and choices[1] == OPTIONS[2]: # s->p
-        scores[0] += 1
-    elif choices[0] == OPTIONS[2] and choices[1] == OPTIONS[0]: # p->s
-        scores[1] += 1
-    elif choices[0] == OPTIONS[1] and choices[1] == OPTIONS[2]: # r->p
-        scores[1] += 1
-    elif choices[0] == OPTIONS[1] and choices[1] == OPTIONS[2]: # p->r
-        scores[0] += 1
+def compare(cpu, user):
+    """
+        This function compares the random CPU-choice with the user's input
+        and returns who won (CPU, USER, DRAW)
+    """
+    # rows: cpu   cols: user
+        #ROCK   PAPER  SCISCCOR
+    matrix = [
+        [DRAW,  USER,  CPU],  #ROCK
+        [CPU,   DRAW, USER],  #PAPER
+        [USER,  CPU,  DRAW]   #SCISCCOR
+    ]
+    return matrix[cpu][user]
 
 main()
