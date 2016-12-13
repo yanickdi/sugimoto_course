@@ -70,11 +70,11 @@ def compare(cpu, user):
         and returns who won (CPU, USER, DRAW)
     """
     # rows: cpu   cols: user
-        #ROCK   PAPER  SCISCCOR
+        #ROCK   PAPER  SCISSORS
     matrix = [
         [DRAW,  USER,  CPU],  #ROCK
         [CPU,   DRAW, USER],  #PAPER
-        [USER,  CPU,  DRAW]   #SCISCCOR
+        [USER,  CPU,  DRAW]   #SCISSORS
     ]
     return matrix[cpu][user]
 
