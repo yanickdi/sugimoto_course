@@ -5,41 +5,47 @@
 """
 
 from lib import random_number_from_interval, user_input
+DEBUG = False
+OPTION = True
 
-#INPUT
+LIMIT_A = 0
+LIMIT_B = 3
+M = 5/8 + 0.001
 
-NUMBER_OF_RANDOM_FIGURES = user_input((
-    ('number of figures to be generated', int, 5), ), DEBUG)[0]
-LOWER_BOUND = user_input((
-    ('Please enter lower bound from 0-3', float, 1), ), DEBUG)[0]
-UPPER_BOUND = user_input((
-    ('Please enter upper bound from 0-3', float, 3), ), DEBUG)[0]
+def main():
+    number_of_figures = user_input((
+        ('Number of figures to be generated', int, 10), ), DEBUG)[0]
     
-print (NUMBER_OF_RANDOM_FIGURES)
-print (LOWER_BOUND)
-print (UPPER_BOUND)
+    accepted_figures = []
+        
+    for i in range(number_of_figures):
+        random_figure = rejection_sampling()
+        print(random_figure)
+        accepted_figures.append(random_figure)
+        
+    if OPTION:
+        print('\nAverage of all random figures:', sum(accepted_figures)/number_of_figures)
 
-#Generate random number X
-x = random_number_from_interval(LOWER_BOUND, UPPER_BOUND)
-
-print (x)
-
-#Density Function
+      
+def rejection_sampling():
+    while True:
+        #Generate random number X
+        zz1 = random_number_from_interval(LIMIT_A, LIMIT_B)
+        zz2 = random_number_from_interval(0, M)
+        if zz2 > density_function(zz1):
+            # reject
+            pass
+        else:
+            return zz1
 
 def density_function(x):
-    x = 0
-    if x >= 0:
-        return x/4
-    elif x >= 1:
-        return 1/4
+    if x >= 3:
+        return 0
     elif x >= 2:
         return 5/8
-    elif x >= 3:
-        return 0
+    elif x >= 1:
+        return 1/4
+    else:
+        return x/4
 
-# Generate Random Number with Density Function
-
-
-
-# Generate Random Uniform Number
-
+main()

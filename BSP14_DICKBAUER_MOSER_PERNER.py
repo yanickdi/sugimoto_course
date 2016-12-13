@@ -31,8 +31,7 @@ def midsquare_method(seed):
     # we want to return a random number from [0, 1[ - so we have to
     # normalize str_quadr
     #quadr is now a number between [0 and (9999**2)]
-    std_rdn = quadr / (9999**2) #There is a big bug! because if seed is a small number,
-                                # next seed will also be very small!
+    std_rdn = quadr / (9999**2)
     return std_rdn, next_seed
     
 def random_numbers_midsquare(n, start_seed):
