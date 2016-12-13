@@ -14,8 +14,10 @@ def main():
             ('Number of random values', int, 10),
             ('Interval from', float, 2.0),
             ('Interval to',   float, 4.0)), use_defaults=DEBUG)
-            
+    
+    # for every i in {0..random_number_from_interval-1}:
     for i in range(number_of_random_values):
+        # generate a new random val between interval_from and interval to
         value = random_number_from_interval(interval_from, interval_to)
         print('{:.2f}'.format(value))
 

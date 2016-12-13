@@ -1,5 +1,5 @@
 """
-    BSP 02 - Simulationen von Distanzen
+    BSP 02 - Simulation von Distanzen
     Dickbauer Yanick 1030489, Moser Patrick 1114954, Perner Manuel 0633155
     WS 2016
 """

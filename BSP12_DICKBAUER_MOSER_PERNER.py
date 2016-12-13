@@ -1,7 +1,8 @@
 """
-    BSP 12 VACATION - Markov Process
+    BSP 12 - Urlaub
     Dickbauer Yanick 1030489, Moser Patrick 1114954, Perner Manuel 0633155
     WS 2016
+    Info: Markov Process
 """
 
 from lib import create_matrix, print_matrix, loaded_random_choice
@@ -35,6 +36,7 @@ def main():
     assert sum(START_VECTOR) == sum(next_year)
     
 def simulate_one_year(act_vector):
+    """ Simulates one year and returns the vector of travellers next year"""
     act_vector = START_VECTOR[:]
     next_vector = [0, 0, 0, 0]
     for country in range(len(act_vector)):
