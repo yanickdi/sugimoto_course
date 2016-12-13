@@ -1,6 +1,6 @@
 """
     BSP 12 VACATION - Markov Process
-    Dickbauer Yanick 1030489, Patrick Moser 1114954, Perner Manuel 0633155
+    Dickbauer Yanick 1030489, Moser Patrick 1114954, Perner Manuel 0633155
     WS 2016
 """
 
