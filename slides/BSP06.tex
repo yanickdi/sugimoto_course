@@ -74,10 +74,53 @@ def main():
 
 \section{Beispiel}
 \begin{frame}[fragile]{Beispiel anhand fixer Zufallszahlen}
+\begin{itemize}
+\item Annahme der Zufallszahlen wie folgt:
+\end{itemize}
+\begin{center}
+  \begin{tabular}{|c|c|c|c|c|c|c|c}
+  \hline 
+  iteration & 0 & 1 & 2 & 3 & 4 & 5-999 \\ 
+  \hline 
+  ZZ      & 0.05 & 0.21 & 0.20 & 0.22 & 0.09 & 0.09\\ 
+  rigged\_dice & 1 & 3 & 3 & 3 & 1 & 1\\ 
+  \hline 
+  \end{tabular} 
+\end{center}
+\begin{easylist}
+\ListProperties(Hide=100, Hang=true, Progressive=3ex, Style*= ,
+Style2*=$\bullet$ ,Style3*=$\circ$ ,Style4*=\tiny$\blacksquare$ )
+& i := 0
+&& rigged\_dice != 3 $\Rightarrow$ subsequent = 0, count = 0
+& i := 1
+&& rigged\_dice == 3 $\Rightarrow$ subsequent = 1, count = 0
+& i := 2
+&& rigged\_dice == 3 $\Rightarrow$ subsequent = 2, count = 0
+\end{easylist}
+\end{frame}
+
+\begin{frame}[fragile]{Beispiel anhand fixer Zufallszahlen}
+\begin{easylist}
+\ListProperties(Hide=100, Hang=true, Progressive=3ex, Style*= ,
+Style2*=$\bullet$ ,Style3*=$\circ$ ,Style4*=\tiny$\blacksquare$ )
+& i := 3
+&& rigged\_dice == 3 $\Rightarrow$ subsequent = 3 $\Rightarrow$ count = 1
+& i := 4
+&& rigged\_dice != 3 $\Rightarrow$ subsequent = 0, count = 1
+\end{easylist}
+Nach 1000 Iteration ist count = 1, also genau 1x 333 hintereinander
 \end{frame}
 
 \begin{frame}[fragile]{Anhang: Modifikation des Source Codes um Demo Beispiel zu erhalten}
   \begin{lstlisting}[language=python]
+  #  Fuege folgenden Code vor random_number_from_interval() in lib.py ein:
+ZZ = [0.05, 0.21, 0.20, 0.22] + [0.01]*1000
+i = -1
+def my_rand():
+    global i
+    i += 1
+    return ZZ[i]
+random.random = my_rand
   \end{lstlisting}
 \logopythonbottom
 \end{frame}
