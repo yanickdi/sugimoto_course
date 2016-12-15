@@ -1,0 +1,133 @@
+\include{settings}
+
+\title[BSP13 - Simulation von $\pi$]{Simulation von $\pi$}
+\author{Dickbauer Y., Moser P., Perner M.}
+\institute{PS Computergestützte Modellierung, WS 2016/17}
+%\date{Date of Presentation}
+
+\begin{document}
+
+\begin{frame}
+  \titlepage
+\end{frame}
+
+% Uncomment these lines for an automatically generated outline.
+\begin{frame}{Outline}
+  \tableofcontents
+\end{frame}
+
+\section{Aufgabenstellung}
+\begin{frame}{Aufgabenstellung}
+Berechnen Sie näherungsweise mittels Simulation die Zahl $\pi$ (3.14159) (Hinweis: Einheits(viertel)kreis)
+\begin{itemize}
+  \item Eingabe: Anzahl an Punkten
+  \item Output: Pi
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}{Grafische Darstellung anhand des Einheitskreises}
+  \begin{columns}[onlytextwidth]
+    \begin{column}{0.7\textwidth}
+	\centering
+  	\includegraphics[scale=0.5]{BSP13_plot_monte_carlo_simulation.pdf}
+  \end{column}
+
+    \begin{column}{0.2\textwidth}
+      \begin{block}{Fläche des Viertelkreises}
+        $\frac{1}{4} * A_{Kreis}$\\
+        = \\
+        $\frac{1}{4}* 1^2 * \pi$      
+      \end{block}
+            \begin{block}{WSK, dass ZZ innerhalb}
+	        $p = \frac{\pi}{4}$      
+      \end{block}
+      \end{column}
+      \end{columns}
+\end{frame} 
+
+\section{Flow Chart}
+\begin{frame}{Flow Chart}
+	\centering
+  	\includegraphics[scale=0.4]{BSP13_Flow_Chart.pdf}
+\end{frame}
+
+\section{Programmcode}
+\subsection{Main Funktion}
+\begin{frame}[fragile]{Main Funktion - Programmeinstieg}
+  \begin{lstlisting}[language=python]
+def main():
+    # user input:
+    simulations = user_input((
+        ('Number of simulations', int, 10000), ),DEBUG)[0]
+        
+    count = 0 # how often did we shoot in the unit circle
+    
+    for i in range(simulations):
+        # create two randoms representing cords in a [1,1] rectangle
+        x = random_number_from_interval(0,1)
+        y = random_number_from_interval(0,1)
+        # check wheter these cords are lying within or beyond the unit circle
+        if euclidean_distance((0, 0), (x, y)) <= 1:
+            count += 1
+        
+    # avg_occurrences p should be pi/4 / 1 --> 4 * avg = pi
+    avg_occurrences = count/simulations
+    pi = avg_occurrences * 4
+    print('Pi is simulated:', pi)
+    print('Difference:     {:+.5f} %'.format((pi/REFERENCE_PI - 1) * 100))
+\end{lstlisting}
+\logopythonbottom
+\end{frame}
+
+\subsection{Verwendete Funktionen}
+\include{lib_euclidean_distance}
+%\include{lib_random_number_from_interval}
+%\include{lib_user_input}
+
+\section{Beispiel}
+\begin{frame}[fragile]{Beispiel anhand fixer Zufallszahlen}
+\begin{itemize}
+\item Annahme der Zufallszahlen wie folgt:
+\end{itemize}
+\begin{center}
+  \begin{tabular}{c|c|c|c|c}
+  \hline 
+  iteration & 0 & 1 & 2 & 3\\ 
+  \hline 
+  x      & 0.6 & 0.2 & 0.9 & 0.4 \\ 
+  y      & 0.1 & 0.7 & 0.6 & 0.5 \\
+  \hline 
+  dist   & 0.61 & 0.73 & 1.08 & 0.64 \\
+  Im Kreis? & 1 & 1 & 0 & 1 
+  \end{tabular} 
+\end{center}
+\begin{easylist}
+\ListProperties(Hide=100, Hang=true, Progressive=3ex, Style*= ,
+Style2*=$\bullet$ ,Style3*=$\circ$ ,Style4*=\tiny$\blacksquare$ )
+& count = 3
+& iterations = 4
+& avg\_occ = $\frac{3}{4}$
+& pi\_sim = $4 \frac{3}{4} = 3.0 $
+& abweichung: -4.5%
+\end{easylist}
+\end{frame}
+
+\begin{frame}{Grafische Darstellung des Beispiels}
+	\centering
+  	\includegraphics[scale=0.5]{BSP13_plot_monte_carlo_simulation.pdf}
+\end{frame} 
+
+\begin{frame}[fragile]{Anhang: Modifikation des Source Codes um Demo Beispiel zu erhalten}
+  \begin{lstlisting}[language=python]
+  #  Fuege folgenden Code vor der main() Funktion ein:
+ZZ = [0.6, 0.1,   0.2, 0.7,  0.9, 0.6,   0.4, 0.5] * 1000
+i = -1
+def random_number_from_interval(x,y):
+    global i
+    i += 1
+    return ZZ[i]
+  \end{lstlisting}
+\logopythonbottom
+\end{frame}
+\end{document}
