@@ -1,0 +1,19 @@
+ \begin{frame}[fragile]{Funktion euclidean\_distance(p1, p2)}
+  \begin{itemize}
+    \item Diese Funktion verlangt zwei Punkte (x1, y1) (x2, y2) als Eingabeparameter
+    \item Gibt die eukliedsche Distanz zurück
+  \end{itemize}
+  \begin{lstlisting}[language=python]
+def euclidean_distance(point_1, point_2):
+    """
+        Calculates the euclidean distance between two points
+        
+        point_1: a tuple of (x,y) values
+        point_2: a tuple of (x,y) values
+    """
+    delta_x = point_2[0] - point_1[0]
+    delta_y = point_2[1] - point_1[1]
+    return (delta_x ** 2 + delta_y ** 2) ** 0.5
+\end{lstlisting}
+\logopythonbottom
+\end{frame}	

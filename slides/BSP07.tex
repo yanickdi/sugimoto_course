@@ -1,0 +1,130 @@
+\include{settings}
+
+\title[BSP07 - Betrunkener]{Betrunkener}
+\author{Dickbauer Y., Moser P., Perner M.}
+\institute{PS Computergestützte Modellierung, WS 2016/17}
+%\date{Date of Presentation}
+
+\begin{document}
+
+\begin{frame}
+  \titlepage
+\end{frame}
+
+% Uncomment these lines for an automatically generated outline.
+\begin{frame}{Outline}
+  \tableofcontents
+\end{frame}
+
+\section{Aufgabenstellung}
+\begin{frame}{Aufgabenstellung}
+In der Mitte eines großen Platzes steht ein Betrunkener an einem Baum gelehnt. Er
+entschließt sich zum Gehen, ohne ein bestimmtes Ziel anzustreben. Folgende Schritte sind
+möglich (in Längeneinheiten):
+\begin{center}
+\begin{tabular}{c|c|c|c|c|c|c|c|c}
+Richtung & N & O & S & W & NW & NO & SO & SW \\ 
+\hline 
+Wahrscheinlichkeit &0/1&1/0&0/-1&-1/0&-1/1&1/1&1/-1&-1/-1\\ 
+\end{tabular} 
+\end{center}
+\begin{itemize}
+  \item Eingabe: Anzahl an Schritten
+  \item Output: Entfernung vom Ausgangspunkt nach n Schritten
+\end{itemize}
+
+\end{frame}
+
+\section{Flow Chart}
+\begin{frame}{Flow Chart}
+	\centering
+  	\includegraphics[scale=0.5]{BSP07_Flow_Chart.pdf}
+\end{frame}
+\section{Flow Chart}
+
+\section{Programmcode}
+\subsection{Main Funktion}
+\begin{frame}[fragile]{Main Funktion - Programmeinstieg}
+  \begin{lstlisting}[language=python]
+POSSIBLE_DIRECTIONS = ( (0, 1), (1, 0), (0, -1), (-1, 0), (-1, 1), (1, 1), (1,-1), (-1,-1) )
+START_POSITION = (0, 0)
+
+def main():
+    # user input
+    (number_of_steps, ) = user_input((
+        ('Number of steps', int, 2000), ), DEBUG)
+        
+    pos = list(START_POSITION)
+    for i in range(number_of_steps):
+        # get a random direction
+        rand_numb = int(random_number_from_interval(0, len(POSSIBLE_DIRECTIONS)))
+        direction = POSSIBLE_DIRECTIONS[rand_numb]
+        # update current position
+        pos[0] += direction[0]
+        pos[1] += direction[1]
+        
+    distance = euclidean_distance(START_POSITION, pos)
+    print('Aktueller Punkt ({}, {}) -> {:.2f} EH Entfernung zum Ausgangspunkt.'.format(
+        pos[0], pos[1], distance))
+\end{lstlisting}
+\logopythonbottom
+\end{frame}
+
+\subsection{Verwendete Funktionen}
+\include{lib_euclidean_distance}
+%\include{lib_random_number_from_interval}
+%\include{lib_user_input}
+
+\section{Beispiel}
+\begin{frame}[fragile]{Beispiel anhand fixer Zufallszahlen}
+\begin{itemize}
+\item Annahme der Zufallszahlen wie folgt:
+\end{itemize}
+\begin{center}
+  \begin{tabular}{|c|c|c|c|c|c|c|c}
+  \hline 
+  iteration & 0 & 1 & 2 & 3 & 4 & 5-999 \\ 
+  \hline 
+  ZZ      & 0.05 & 0.21 & 0.20 & 0.22 & 0.09 & 0.09\\ 
+  rigged\_dice & 1 & 3 & 3 & 3 & 1 & 1\\ 
+  \hline 
+  \end{tabular} 
+\end{center}
+\begin{easylist}
+\ListProperties(Hide=100, Hang=true, Progressive=3ex, Style*= ,
+Style2*=$\bullet$ ,Style3*=$\circ$ ,Style4*=\tiny$\blacksquare$ )
+& i := 0
+&& rigged\_dice != 3 $\Rightarrow$ subsequent = 0, count = 0
+& i := 1
+&& rigged\_dice == 3 $\Rightarrow$ subsequent = 1, count = 0
+& i := 2
+&& rigged\_dice == 3 $\Rightarrow$ subsequent = 2, count = 0
+\end{easylist}
+\end{frame}
+
+\begin{frame}[fragile]{Beispiel anhand fixer Zufallszahlen}
+\begin{easylist}
+\ListProperties(Hide=100, Hang=true, Progressive=3ex, Style*= ,
+Style2*=$\bullet$ ,Style3*=$\circ$ ,Style4*=\tiny$\blacksquare$ )
+& i := 3
+&& rigged\_dice == 3 $\Rightarrow$ subsequent = 3 $\Rightarrow$ count = 1
+& i := 4
+&& rigged\_dice != 3 $\Rightarrow$ subsequent = 0, count = 1
+\end{easylist}
+Nach 1000 Iteration ist count = 1, also genau 1x 333 hintereinander
+\end{frame}
+
+\begin{frame}[fragile]{Anhang: Modifikation des Source Codes um Demo Beispiel zu erhalten}
+  \begin{lstlisting}[language=python]
+  #  Fuege folgenden Code vor random_number_from_interval() in lib.py ein:
+ZZ = [0.05, 0.21, 0.20, 0.22] + [0.01]*1000
+i = -1
+def my_rand():
+    global i
+    i += 1
+    return ZZ[i]
+random.random = my_rand
+  \end{lstlisting}
+\logopythonbottom
+\end{frame}
+\end{document}
