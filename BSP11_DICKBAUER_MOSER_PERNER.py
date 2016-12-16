@@ -6,7 +6,7 @@
 
 from lib import user_input, random_number_from_interval
 
-DEBUG = False
+DEBUG = True
 
 #INPUT:
 OPTIONS = ['rock', 'paper', 'scissors']

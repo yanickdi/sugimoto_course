@@ -1,0 +1,151 @@
+\include{settings}
+
+\title[BSP04 - Geburtstage]{Geburtstage}
+\author{Dickbauer Y., Moser P., Perner M.}
+\institute{PS Computergestützte Modellierung, WS 2016/17}
+%\date{Date of Presentation}
+
+\begin{document}
+
+\begin{frame}
+  \titlepage
+\end{frame}
+
+% Uncomment these lines for an automatically generated outline.
+\begin{frame}{Outline}
+  \tableofcontents
+\end{frame}
+
+\section{Aufgabenstellung}
+\begin{frame}{Aufgabenstellung}
+In einem Seminar sitzen x Teilnehmer. Ermitteln Sie n¨aherungsweise mittels Simulation
+die Wahrscheinlichkeit, dass zwei Teilnehmer am selben Tag Geburtstag haben.
+
+\begin{itemize}
+  \item Eingabe: Anzahl an Teilnehmer, Anzahl an Simulationsdurchläufen
+  \item Durchschnittliche Wahrscheinlichkeit, dass zwei Teilnehmer am selben Tag
+Geburtstag haben.
+  \item Output optional: Ausgabe der Geburtstage und Markierung der Tage, wo mehr als
+eine Person Geburtstag hat.
+\end{itemize}
+
+\end{frame}
+
+\section{Flow Chart}
+\begin{frame}{Flow Chart}
+	\centering
+  	\includegraphics[scale=0.4]{BSP04_Flow_Chart_1.pdf}
+\end{frame}
+\section{Flow Chart}
+\begin{frame}{Flow Chart - Ein Simulationsdurchgang}
+	\centering
+  	\includegraphics[scale=0.4]{BSP04_Flow_Chart_2.pdf}
+\end{frame}
+
+\section{Programmcode}
+\subsection{Main Funktion}
+\begin{frame}[fragile]{Main Funktion - Programmeinstieg}
+  \begin{lstlisting}[language=python]
+def main():
+    #user input:
+    number_of_simulations, number_of_participants = user_input((
+        ('Number of simulations', int, 100),
+        ('Number of participants', int, 40)), DEBUG)
+        
+    simulation_results = []
+    for simulation in range(number_of_simulations):
+        # generate a list of birthdays - with length of participants
+        birthday_list = []
+        for i in range(number_of_participants):
+            birthday_list.append( int(random_number_from_interval(0, DAYS_IN_A_YEAR))+1 )
+        # count the same candidates:
+        occ_dict = occurrences(birthday_list)
+        assert sum(occ_dict.values()) == number_of_participants
+        number_of_same_values = sum([value if value >= 2 else 0 for key, value in occ_dict.items()])
+        simulation_results.append(number_of_same_values)
+        
+        # output only if option enabled:
+        if OPTION:
+        	# print those where there are more than two... see source
+    
+\end{lstlisting}
+\logopythonbottom
+\end{frame}
+
+\begin{frame}[fragile]{Main Funktion - Programmeinstieg}
+  \begin{lstlisting}[language=python]
+    # result of all simulations
+    overall_number_of_same_birthdays = sum(simulation_results)
+    avg_number_of_same_birthdays = overall_number_of_same_birthdays /
+    							   number_of_simulations
+    simulation_result_p = avg_number_of_same_birthdays /
+    					  number_of_participants
+    
+    print('Ergebnisse aller {0}/{0} Simulationen:'.format(number_of_simulations))
+    print('Durchschnittlich haben {} von {} Personen am gleichen Tag Geburtstag.'.format(
+        avg_number_of_same_birthdays, number_of_participants))
+    print('WSKL ueber alle Simulationen: p={}%'.format(simulation_result_p * 100))
+\end{lstlisting}
+\logopythonbottom
+\end{frame}
+
+\subsection{Verwendete Funktionen}
+\include{lib_random_number_from_interval}
+\include{lib_user_input}
+\begin{frame}[fragile]{Funktion occurences(input\_list)}
+  \begin{itemize}
+    \item Diese Funktion verlangt eine Liste voller Zahlen als Eingabeparameter \textit{input\_list}
+    \item Diese Liste wird durchsucht auf alle vorkommenden Zahlen und zählt mit, wie oft welche Zahl in der Liste enthalten ist
+    \item Zurückgegeben wird ein \textit{dictionary}, welches jeweils die Zahl als \textit{key} und die Anzahl dieser keys in der Eingabeliste als \textit{value}
+    \item Eingabeliste [1,2,3] gibt zurück: \{1: 1, 2: 1, 3: 1\}
+    \item Eingabeliste [1,1,2] gibt zurück: \{1: 2, 2: 1\}
+  \end{itemize}
+  Code:
+  \begin{lstlisting}[language=python]
+def occurrences(input_list):
+    occ_dict = {}
+    for elem in input_list:
+        if elem in occ_dict:
+            occ_dict[elem] += 1
+        else:
+            occ_dict[elem] = 1
+    return occ_dict
+  \end{lstlisting}
+\logopythonbottom
+\end{frame}
+
+\section{Beispiel}
+\begin{frame}[fragile]{Beispiel anhand fixer Zufallszahlen}
+\begin{itemize}
+	\item number\_of\_simulations := 2
+	\item number\_of\_participants := 10
+\end{itemize}
+\begin{easylist}
+\ListProperties(Hide=100, Hang=true, Progressive=3ex, Style*= ,
+Style2*=$\bullet$ ,Style3*=$\circ$ ,Style4*=\tiny$\blacksquare$ )
+& Simulationsdurchgang 0:
+&& Geburtstage := \{1, 10, 20, 50, 10, 20, 40, 12, 40, 365\}
+&& Ergebnis: 6 (2x10, 2x20, 2x40)
+& Simulationsdurchgang 1:
+&& Geburtstage := \{2, 10, 77, 40, 15, 20, 77, 12, 40, 365\}
+&& Ergebnis: 4 (2x40, 2x77)
+\vspace{0.5cm}
+& Im Durchschnitt haben 5 Personen am gleichen Tag Geburtstag $\frac{6+4}{2} = 5.$
+& Das sind 50\% der Teilnehmer $\frac{6+4}{2*10}$ oder $\frac{5}{10}$
+\end{easylist}
+\end{frame}
+
+\begin{frame}[fragile]{Anhang: Modifikation des Source Codes um Demo Beispiel zu erhalten}
+  \begin{lstlisting}[language=python]
+  # Aendere random_number_from_interval() in lib.py wie folgt:
+ZZ = [1, 10, 20, 50, 10, 20, 40, 12, 40, 365,
+      2, 10, 77, 40, 15, 20, 77, 12, 40, 365]
+i = -1
+def random_number_from_interval(lower, upper):
+    global i
+    i += 1
+    return ZZ[i]-1
+  \end{lstlisting}
+\logopythonbottom
+\end{frame}
+\end{document}
