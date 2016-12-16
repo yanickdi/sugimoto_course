@@ -37,12 +37,11 @@ def main():
     
 def simulate_one_year(act_vector):
     """ Simulates one year and returns the vector of travellers next year"""
-    act_vector = START_VECTOR[:]
     next_vector = [0, 0, 0, 0]
     for country in range(len(act_vector)):
         travellers = act_vector[country]
+        probability_list = TRANS_MATRIX[country]
         for traveller in range(travellers):
-            probability_list = TRANS_MATRIX[country]
             next_country = loaded_random_choice(probability_list)
             next_vector[next_country] += 1
     return next_vector
