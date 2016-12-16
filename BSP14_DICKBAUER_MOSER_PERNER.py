@@ -13,10 +13,11 @@
     Output:           Zufallszahlen
 """
 
+# BSP A - MIDSQUARE
 # INPUT:
 
 def midsquare_method(seed):
-    """Returns two values: a equal distributed float between [0., 1.[ 
+    """Returns two values: an equal  distributed float between [0., 1.[ 
         calculated via the midsquare method and the second value is the
         next seed for next calculation
        seed: a number with the length of 4 (works also with a length
@@ -49,3 +50,35 @@ def main():
     print(sum(rands)/n)
     
 main()
+
+# BSP B - gemischte Kongruenzmethode
+#INPUT
+
+n = 4
+a = 13
+b = 2
+m = 31
+x_seed = 1
+
+# Generate n random numbers
+mixed_random_numbers = []
+
+""" returns a list of n random numbers according to input parameters"""
+for i in range (n):
+    x_new = ((x_seed * a + b) % m)
+    x_seed = x_new
+    mixed_random_numbers.append(x_new)
+    
+print (mixed_random_numbers)
+
+#BSP C - multiplikative Kongruenzmethode
+multi_mixed_random_numbers = []
+
+""" returns a list of n random numbers according to input parameters"""
+for i in range (n):
+    x_new = ((x_seed * a) % m)
+    x_seed = x_new
+    multi_mixed_random_numbers.append(x_new)
+    
+print (multi_mixed_random_numbers)
+
