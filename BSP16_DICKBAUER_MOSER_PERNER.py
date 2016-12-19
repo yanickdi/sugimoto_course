@@ -1,5 +1,5 @@
 """
-    BSP 15 - Inversionsmethode
+    BSP 16 - Inversionsmethode
     Dickbauer Yanick 1030489, Moser Patrick 1114954, Perner Manuel 0633155
     WS 2016
 """
