@@ -4,17 +4,20 @@
     WS 2016
 """
 
-from lib import user_input, loaded_random_choice
+from lib import user_input, loaded_random_choice, random_number_from_interval
 
-#INPUT
+VISITORS = 30
+
+ALTERNATIVE = False
+ZZ_FIVE, ZZ_TEN = 1, 0
+ALTERNATIVE_LIST = [ZZ_FIVE] * 15 + [ZZ_TEN] * 15
+assert (ALTERNATIVE and VISITORS <= len(ALTERNATIVE_LIST)) or not ALTERNATIVE
 
 NUMBER_OF_5S = 1
-VISITORS = 5
 P_10 = 0.6
 P_5 = 1 - P_10
 
 
-ZZ_FIVE, ZZ_TEN = 1, 0
 ZZ = [ZZ_TEN, ZZ_TEN, ZZ_TEN, ZZ_FIVE, ZZ_TEN] + [ZZ_FIVE] * 1000
 i = -1
 def loaded_random_choice(param):
@@ -22,10 +25,21 @@ def loaded_random_choice(param):
     i += 1
     return ZZ[i]
 
+def new_customer_has_a_5():
+    """ Returns True if a new customer has a 5, False if 10"""
+    if ALTERNATIVE: 
+        choice_index = int(random_number_from_interval(0, len(ALTERNATIVE_LIST)))
+        choice = ALTERNATIVE_LIST.pop(choice_index)
+        return choice
+    else:
+        #random
+        p_list = [P_10, P_5]
+        return True if loaded_random_choice(p_list) == 1 else False
+
+
 def main():    
     queue = []
     visits = 0
-    p_list = [P_10, P_5]
     fives = NUMBER_OF_5S
     tens = 0
     cum_queue_length = 0
@@ -38,7 +52,7 @@ def main():
             fives -= 1
             tens += 1
         elif visits < VISITORS:
-            is5 = True if loaded_random_choice(p_list) == 1 else False
+            is5 = new_customer_has_a_5()
             print('Note: {}'.format(5 if is5 else 10))
             print('Number of 5s in cash desk before: {}'.format(fives))
             print('Number of 10s in cash desk before: {}\n'.format(tens))
