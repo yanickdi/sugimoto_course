@@ -1,0 +1,79 @@
+\include{settings}
+
+\title[BSP19 - Verderbliche Ware]{Verderbliche Ware}
+\author{Dickbauer Y., Moser P., Perner M.}
+\institute{PS Computergestützte Modellierung, WS 2016/17}
+%\date{Date of Presentation}
+
+\begin{document}
+
+\begin{frame}
+  \titlepage
+\end{frame}
+
+\begin{frame}{Outline}
+  \tableofcontents
+\end{frame}
+
+\section{Aufgabenstellung}
+\begin{frame}{Aufgabenstellung}
+Die Produktionsmenge (in Stück) einer verderblichen Ware sei N(100000, 2000)-verteilt;
+die nachgefragte Menge pro Woche sei N(110000, 20000)-verteilt. Der Gewinn je verkauftem
+Stück betrage 3 Euro.
+Da die erwartete Nachfrage größer als die erwartete Produktion ist, überlegt der Produzent,
+eine Überstundenschicht einzulegen. Die produzierte Menge pro Woche der zusätzlichen
+Schicht wird als N(10000, 200)-verteilt angenommen. Dabei entstehen zusätzliche
+Produktionskosten von 80 Cent pro Stück. Jedes nichtverkaufte Stück verursacht Kosten
+von 5 Euro. Durch Simulation über 50 Wochen soll entschieden werden, welche der
+Alternativen günstiger ist.
+
+\begin{itemize}
+  \item Eingabe: -
+  \item Output: je Periode die Gesamtnachfrage, Produktion ohne bzw. mit Überschicht,
+Kosten und Gewinn, sowie Gesamtgewinn.
+\end{itemize}
+\end{frame}
+
+
+\section{Flow Chart}
+\begin{frame}{Flow Chart}
+	\centering
+  	\includegraphics[scale=0.4]{FlowChartTodo.pdf}
+\end{frame}
+
+\section{Programmcode}
+\subsection{Main Funktion}
+\begin{frame}[fragile]{Main Funktion - Programmeinstieg}
+  \begin{lstlisting}[language=python]
+def main():
+	pass
+\end{lstlisting}
+\logopythonbottom
+\end{frame}
+
+\subsection{Verwendete Funktionen}
+%\include{lib_euclidean_distance}
+%\include{lib_random_number_from_interval}
+\include{lib_user_input}
+
+\section{Beispiel}
+\begin{frame}[fragile]{Beispiel anhand fixer Zufallszahlen}
+\begin{itemize}
+\item Annahme der Zufallszahlen wie folgt:
+\end{itemize}
+\begin{center}
+  \begin{tabular}{c|c|c|c|c}
+  \hline 
+  iteration & 0 & 1 & 2 & 3\\ 
+  \hline 
+  ZZ      & 1 & 2 & 3 & 4 \\ 
+  \end{tabular} 
+\end{center}
+\begin{easylist}
+\ListProperties(Hide=100, Hang=true, Progressive=3ex, Style*= ,
+Style2*=$\bullet$ ,Style3*=$\circ$ ,Style4*=\tiny$\blacksquare$ )
+& blub
+\end{easylist}
+\end{frame}
+
+\end{document}

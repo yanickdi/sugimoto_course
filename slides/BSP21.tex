@@ -1,0 +1,84 @@
+\include{settings}
+
+\title[BSP21 - Lagerhaltung]{Lagerhaltung}
+\author{Dickbauer Y., Moser P., Perner M.}
+\institute{PS Computergestützte Modellierung, WS 2016/17}
+%\date{Date of Presentation}
+
+\begin{document}
+
+\begin{frame}
+  \titlepage
+\end{frame}
+
+\begin{frame}{Outline}
+  \tableofcontents
+\end{frame}
+
+\section{Aufgabenstellung}
+\begin{frame}{Aufgabenstellung}
+Ein Großhändler steht vor folgendem Lagerhaltungsproblem: Die Lagerung eines Produktes
+kostet 2 Euro pro Tag, eine Bestellung beim Lieferanten verursacht Kosten von
+20 Euro (unabhängig von der Bestellmenge), der Verdienstentgang für ein nachgefragtes,
+aber nicht vorhandenes Produkt beträgt 15 Euro.\\~\\
+Die tägliche Nachfragemenge sei
+\begin{enumerate}
+\item binomialverteilt mit n = 7 und p = 0.5
+\item poissonverteilt mit $\lambda$ = 3.
+\end{enumerate}
+\end{frame}
+
+\begin{frame}{Aufgabenstellung}
+Die Bestellregel für den Disponenten soll lauten: Bestelle q Stück, wenn weniger als s
+Stück auf Lager sind. Bestimmen Sie dazu durch Simulation kostenoptimale Werte q, s
+(Variation von q und s zwischen 2 und 8 Stück mit q $\geq$ s).\\~\\
+
+\begin{itemize}
+  \item Eingabe: -
+  \item Output: Lagerbestand zu Periodenstart, Einkauf, Nachfrage, Verdienstentgang und
+Gesamtkosten je Periode
+\end{itemize}
+\end{frame}
+
+\section{Flow Chart}
+\begin{frame}{Flow Chart}
+	\centering
+  	\includegraphics[scale=0.4]{FlowChartTodo.pdf}
+\end{frame}
+
+\section{Programmcode}
+\subsection{Main Funktion}
+\begin{frame}[fragile]{Main Funktion - Programmeinstieg}
+  \begin{lstlisting}[language=python]
+def main():
+	pass
+\end{lstlisting}
+\logopythonbottom
+\end{frame}
+
+\subsection{Verwendete Funktionen}
+%\include{lib_euclidean_distance}
+%\include{lib_random_number_from_interval}
+\include{lib_user_input}
+
+\section{Beispiel}
+\begin{frame}[fragile]{Beispiel anhand fixer Zufallszahlen}
+\begin{itemize}
+\item Annahme der Zufallszahlen wie folgt:
+\end{itemize}
+\begin{center}
+  \begin{tabular}{c|c|c|c|c}
+  \hline 
+  iteration & 0 & 1 & 2 & 3\\ 
+  \hline 
+  ZZ      & 1 & 2 & 3 & 4 \\ 
+  \end{tabular} 
+\end{center}
+\begin{easylist}
+\ListProperties(Hide=100, Hang=true, Progressive=3ex, Style*= ,
+Style2*=$\bullet$ ,Style3*=$\circ$ ,Style4*=\tiny$\blacksquare$ )
+& blub
+\end{easylist}
+\end{frame}
+
+\end{document}

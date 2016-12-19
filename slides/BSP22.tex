@@ -1,0 +1,99 @@
+\include{settings}
+
+\title[BSP22 - Fertigungssystem]{Fertigungssystem}
+\author{Dickbauer Y., Moser P., Perner M.}
+\institute{PS Computergestützte Modellierung, WS 2016/17}
+%\date{Date of Presentation}
+
+\begin{document}
+
+\begin{frame}
+  \titlepage
+\end{frame}
+
+\begin{frame}{Outline}
+  \tableofcontents
+\end{frame}
+
+\section{Aufgabenstellung}
+\begin{frame}{Aufgabenstellung}
+In einem Fertigungssystem werden Aufträge auf einer Maschine bearbeitet. Es gibt zwei
+Typen von Produkten: Typ 1 (Typ 2) benötigt auf der Maschine eine Bearbeitungszeit, die
+stetig gleichverteilt zwischen 2 und 6 min (1.5 und 4.5 min) liegt. Die Wahrscheinlichkeit,
+dass ein Produkt vom Typ 1 ist, ist 0.4. Die Produkte kommen exponentialverteilt mit
+Erwartungswert von 4 in das System. Die Kapazität der Warteschlange ist mit 5 Stück
+begrenzt; Produkte, die in das System kommen, während die Warteschlangenkapazität
+ausgelastet ist, werden aus dem System eliminiert.
+\end{frame}
+
+\begin{frame}{Aufgabenstellung}
+Anschließend an die Bearbeitungsphase kommt eine Inspektion. Die Zeit, die man braucht,
+um diese durchzuführen, ist für Produkttyp 1 (Produkttyp 2) gleichverteilt zwischen 3
+und 5 min (1 und 3 min). Es wird überprüft, ob ein Produkt defekt ist oder nicht. Die
+Wahrscheinlichkeit, dass ein Produkt defekt ist und somit aussortiert wird, ist 0.1.
+\begin{enumerate}[(a)]
+\item Zählen Sie die Stücke, die entfernt werden, weil die Kapazität der Warteschlange vor
+der Maschine zu gering war, und die Anzahl der defekten Stücke.
+\item Bestimmen Sie die durchschnittliche Länge der Warteschlange vor der Inspektionsstation
+und die Auslastung der Maschine und der Inspektionsstation.
+\item Wie lange brauchen die Produkte durchschnittlich, um durch das System geschleust
+zu werden?
+\end{enumerate}
+\end{frame}
+
+\begin{frame}{Aufgabenstellung}
+Beginnen Sie die Simulation mit einer Aufwärmphase von 8h. Danach sollen alle statistischen
+Werte gelöscht werden. Die Zeit der tatsächlichen Simulation ist 800h. Stellen Sie
+im Rahmen der Präsentation den Ablauf des Programmes anhand von selbstgewählten
+Zufallszahlen vor.
+
+\begin{itemize}
+  \item Eingabe: -
+  \item Output: Verlauf von Produktion (Startzeit, Bearbeitungszeit, Endzeit je Produkt),
+Warteschlangenlänge bei Bearbeitung und Inspektion, sowie die oben angeführten
+Kennzahlen.
+\end{itemize}
+\end{frame}
+
+\section{Flow Chart}
+\begin{frame}{Flow Chart}
+	\centering
+  	\includegraphics[scale=0.4]{FlowChartTodo.pdf}
+\end{frame}
+
+\section{Programmcode}
+\subsection{Main Funktion}
+\begin{frame}[fragile]{Main Funktion - Programmeinstieg}
+  \begin{lstlisting}[language=python]
+def main():
+	pass
+\end{lstlisting}
+\logopythonbottom
+\end{frame}
+
+\subsection{Verwendete Funktionen}
+%\include{lib_euclidean_distance}
+%\include{lib_random_number_from_interval}
+\include{lib_user_input}
+
+\section{Beispiel}
+\begin{frame}[fragile]{Beispiel anhand fixer Zufallszahlen}
+\begin{itemize}
+\item Annahme der Zufallszahlen wie folgt:
+\end{itemize}
+\begin{center}
+  \begin{tabular}{c|c|c|c|c}
+  \hline 
+  iteration & 0 & 1 & 2 & 3\\ 
+  \hline 
+  ZZ      & 1 & 2 & 3 & 4 \\ 
+  \end{tabular} 
+\end{center}
+\begin{easylist}
+\ListProperties(Hide=100, Hang=true, Progressive=3ex, Style*= ,
+Style2*=$\bullet$ ,Style3*=$\circ$ ,Style4*=\tiny$\blacksquare$ )
+& blub
+\end{easylist}
+\end{frame}
+
+\end{document}
