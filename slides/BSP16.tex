@@ -1,0 +1,83 @@
+\include{settings}
+
+\title[BSP16 - Inversionsmethode]{Inversionsmethode}
+\author{Dickbauer Y., Moser P., Perner M.}
+\institute{PS Computergestützte Modellierung, WS 2016/17}
+%\date{Date of Presentation}
+
+\begin{document}
+
+\begin{frame}
+  \titlepage
+\end{frame}
+
+% Uncomment these lines for an automatically generated outline.
+\begin{frame}{Outline}
+  \tableofcontents
+\end{frame}
+
+\section{Aufgabenstellung}
+\begin{frame}{Aufgabenstellung}
+Erzeugen Sie mit Hilfe der Inversionsmethode N Zufallszahlen f¨ur die Zufallsverteilung
+X, die durch ihre Verteilungsfunktion F(x) gegeben ist:
+\begin{equation}
+   f(x) =
+   \begin{cases}
+     0 & \text{für } x < 0 \\
+     1 - \frac{1}{1+x^2} & x \geq 0 \\
+   \end{cases}
+\end{equation}
+\begin{itemize}
+  \item Eingabe: Anzahl an Zufallszahlen
+  \item Output: Zufallszahlen
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}{Grafische Darstellung der Funktion}
+	\centering
+  	\includegraphics[scale=0.5]{BSP16_plot_function.pdf}
+\end{frame} 
+
+\section{Flow Chart}
+\begin{frame}{Flow Chart}
+	\centering
+  	\includegraphics[scale=0.4]{FlowChartTodo.pdf}
+\end{frame}
+
+\section{Programmcode}
+\subsection{Main Funktion}
+\begin{frame}[fragile]{Main Funktion - Programmeinstieg}
+  \begin{lstlisting}[language=python]
+def main():
+	pass
+\end{lstlisting}
+\logopythonbottom
+\end{frame}
+
+\subsection{Verwendete Funktionen}
+%\include{lib_euclidean_distance}
+%\include{lib_random_number_from_interval}
+\include{lib_user_input}
+
+\section{Beispiel}
+\begin{frame}[fragile]{Beispiel anhand fixer Zufallszahlen}
+\begin{itemize}
+\item Annahme der Zufallszahlen wie folgt:
+\end{itemize}
+\begin{center}
+  \begin{tabular}{c|c|c|c|c}
+  \hline 
+  iteration & 0 & 1 & 2 & 3\\ 
+  \hline 
+  ZZ      & 1 & 2 & 3 & 4 \\ 
+  \end{tabular} 
+\end{center}
+\begin{easylist}
+\ListProperties(Hide=100, Hang=true, Progressive=3ex, Style*= ,
+Style2*=$\bullet$ ,Style3*=$\circ$ ,Style4*=\tiny$\blacksquare$ )
+& blub
+\end{easylist}
+\end{frame}
+
+\end{document}

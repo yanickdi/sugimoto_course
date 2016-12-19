@@ -1,0 +1,86 @@
+\include{settings}
+
+\title[BSP23 - Fertigungsstraße]{Fertigungsstraße}
+\author{Dickbauer Y., Moser P., Perner M.}
+\institute{PS Computergestützte Modellierung, WS 2016/17}
+%\date{Date of Presentation}
+
+\begin{document}
+
+\begin{frame}
+  \titlepage
+\end{frame}
+
+\begin{frame}{Outline}
+  \tableofcontents
+\end{frame}
+
+\section{Aufgabenstellung}
+\begin{frame}{Aufgabenstellung}
+Eine Fertigungsstraße besteht aus 3 Maschinen. Die Straße erhält die zu bearbeitenden
+Teile aus einem Rohlager (mit unendlichem Vorrat); die bearbeitenden Teile werden in
+ein nachgeschaltetes Fertigteillager (mit ebenfalls unendlicher Kapazität) geliefert.\\~\\
+Die normale Bearbeitungszeit eines Teiles beträgt pro Maschine eine Minute; bei 15% der
+Teile tritt jedoch eine Störung von vier Minuten auf, so dass die gesamte Bearbeitungszeit
+eines Teiles dann 5 Minuten pro Maschine beträgt.
+\end{frame}
+
+\begin{frame}{Aufgabenstellung}
+Untersuchen Sie durch Simulation über 180 Minuten, ob es zweckmässig ist, die drei
+Maschinen zu entkoppeln und zwischen den Maschinen ein Pufferlager einzurichten. Vergleichen
+Sie dazu beispielsweise den Ausstoß (gefertigte Stückzahl), die Stillstandszeiten
+und den Auslastungsgrad der Maschine sowie die durchschnittliche Bearbeitungszeit eines
+Teiles auf der Fertigungsstraße. Stellen Sie im Rahmen der Präsentation den Ablauf
+des Programmes anhand von selbstgewählten Zufallszahlen beziehungsweise mit einem
+Gantt-Diagramm die Abhängigkeiten der Maschinen vor.
+\begin{itemize}
+  \item Eingabe: -
+  \item Output: Verlauf von Produktion (Startzeit, Bearbeitungszeit, Endzeit je Produkt
+und Maschine), Warteschlangenlänge bei Bearbeitung und Inspektion, sowie die
+oben angeführten Kennzahlen.
+Kennzahlen.
+\end{itemize}
+\end{frame}
+
+\section{Flow Chart}
+\begin{frame}{Flow Chart}
+	\centering
+  	\includegraphics[scale=0.4]{FlowChartTodo.pdf}
+\end{frame}
+
+\section{Programmcode}
+\subsection{Main Funktion}
+\begin{frame}[fragile]{Main Funktion - Programmeinstieg}
+  \begin{lstlisting}[language=python]
+def main():
+	pass
+\end{lstlisting}
+\logopythonbottom
+\end{frame}
+
+\subsection{Verwendete Funktionen}
+%\include{lib_euclidean_distance}
+%\include{lib_random_number_from_interval}
+\include{lib_user_input}
+
+\section{Beispiel}
+\begin{frame}[fragile]{Beispiel anhand fixer Zufallszahlen}
+\begin{itemize}
+\item Annahme der Zufallszahlen wie folgt:
+\end{itemize}
+\begin{center}
+  \begin{tabular}{c|c|c|c|c}
+  \hline 
+  iteration & 0 & 1 & 2 & 3\\ 
+  \hline 
+  ZZ      & 1 & 2 & 3 & 4 \\ 
+  \end{tabular} 
+\end{center}
+\begin{easylist}
+\ListProperties(Hide=100, Hang=true, Progressive=3ex, Style*= ,
+Style2*=$\bullet$ ,Style3*=$\circ$ ,Style4*=\tiny$\blacksquare$ )
+& blub
+\end{easylist}
+\end{frame}
+
+\end{document}
