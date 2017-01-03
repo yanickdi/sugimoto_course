@@ -13,7 +13,6 @@ ZZ_FIVE, ZZ_TEN = 1, 0
 ALTERNATIVE_LIST = [ZZ_FIVE] * 15 + [ZZ_TEN] * 15
 assert (ALTERNATIVE and VISITORS <= len(ALTERNATIVE_LIST)) or not ALTERNATIVE
 
-NUMBER_OF_5S = 1
 P_10 = 0.6
 P_5 = 1 - P_10
 
@@ -40,7 +39,7 @@ def new_customer_has_a_5():
 def main():    
     queue = []
     visits = 0
-    fives = NUMBER_OF_5S
+    fives = user_input([['Wieviele 5 Euro Scheine sind in der Kassa', int, 1]])[0]
     tens = 0
     cum_queue_length = 0
     iterations = 0

@@ -24,7 +24,7 @@ X, die durch ihre Verteilungsfunktion F(x) gegeben ist:
    f(x) =
    \begin{cases}
      0 & \text{für } x < 0 \\
-     1 - \frac{1}{1+x^2} & x \geq 0 \\
+     1 - \frac{1}{1+x^2} & \text{für } x \geq 0 \\
    \end{cases}
 \end{equation}
 \begin{itemize}
@@ -39,45 +39,29 @@ X, die durch ihre Verteilungsfunktion F(x) gegeben ist:
   	\includegraphics[scale=0.5]{BSP16_plot_function.pdf}
 \end{frame} 
 
+\begin{frame}{Inversionsmethode}
+\begin{equation}
+   f(x) =
+   \begin{cases}
+     0 & \text{für } x < 0 \\
+     1 - \frac{1}{1+x^2} & \text{für } x \geq 0 \\
+   \end{cases}
+\end{equation}
+\begin{equation}
+   f^{-1}(x) =
+   \begin{cases}
+     0 & \text{für } x = 0 \\
+     \pm \sqrt{\frac{1}{1-x} - 1} & \text{für } 0 > x < 1 \\
+   \end{cases}
+\end{equation}
+	\centering
+  	\includegraphics[scale=0.3]{BSP16_plot_function_inverse.pdf}
+\end{frame}
+
 \section{Flow Chart}
 \begin{frame}{Flow Chart}
 	\centering
-  	\includegraphics[scale=0.4]{FlowChartTodo.pdf}
-\end{frame}
-
-\section{Programmcode}
-\subsection{Main Funktion}
-\begin{frame}[fragile]{Main Funktion - Programmeinstieg}
-  \begin{lstlisting}[language=python]
-def main():
-	pass
-\end{lstlisting}
-\logopythonbottom
-\end{frame}
-
-\subsection{Verwendete Funktionen}
-%\include{lib_euclidean_distance}
-%\include{lib_random_number_from_interval}
-\include{lib_user_input}
-
-\section{Beispiel}
-\begin{frame}[fragile]{Beispiel anhand fixer Zufallszahlen}
-\begin{itemize}
-\item Annahme der Zufallszahlen wie folgt:
-\end{itemize}
-\begin{center}
-  \begin{tabular}{c|c|c|c|c}
-  \hline 
-  iteration & 0 & 1 & 2 & 3\\ 
-  \hline 
-  ZZ      & 1 & 2 & 3 & 4 \\ 
-  \end{tabular} 
-\end{center}
-\begin{easylist}
-\ListProperties(Hide=100, Hang=true, Progressive=3ex, Style*= ,
-Style2*=$\bullet$ ,Style3*=$\circ$ ,Style4*=\tiny$\blacksquare$ )
-& blub
-\end{easylist}
+  	\includegraphics[scale=0.4]{BSP16_FlowChart.pdf}
 \end{frame}
 
 \end{document}
