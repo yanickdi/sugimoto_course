@@ -6,9 +6,8 @@
 
 from lib import user_input, loaded_random_choice
 
-#INPUT:
-PLOT = True
-SIMULATION_DURATION = 100
+DEBUG = False
+PLOT = False
 P = 0.5
 Q = 0.5
 
@@ -25,8 +24,10 @@ def main():
     waiting = 0
     arrivals = [(1-P), P]
     servings = [(1-Q), Q]
-    for i in range(SIMULATION_DURATION):
-        print('Queue length at beginning of period {}: {}'.format(i, waiting))
+    simulation_duration = user_input((
+        ('Number of simulations', int, 100), ),DEBUG)[0]
+    for i in range(simulation_duration):
+        print('Queue length at beginning of period {}: {}'.format(i+1, waiting))
         old_waiting = waiting
         arrived = loaded_random_choice(arrivals)
         served = loaded_random_choice(servings)
@@ -43,8 +44,8 @@ def main():
         print('Change in Queue length {}: {}\n'.format(i, waiting-old_waiting))
     
     avg_waiting_time = sum(customer_waiting)/sum(customer_arrivals)
-    utilization = sum(customer_served)/SIMULATION_DURATION
-    avg_queue_length = sum(customer_waiting)/SIMULATION_DURATION
+    utilization = sum(customer_served)/simulation_duration
+    avg_queue_length = sum(customer_waiting)/simulation_duration
     print('Average Waiting Time: {:.2f}'.format(avg_waiting_time))
     print('Utilization: {:.2f}'.format(utilization))
     print('Average Queue Length: {:.2f}'.format(avg_queue_length))
