@@ -1,5 +1,5 @@
 import random
-from math import sin, log, pi
+from math import sin, log, pi, exp
 
 def random_number_from_interval(lower, upper):
     """Returns a random number out of the interval (lower, upper["""
@@ -12,6 +12,37 @@ def random_std(mean=0, sigma=1):
     u1, u2 = random.random(), random.random()
     zz = (-2 * log(u1))**(1/2) * sin(2 * pi * u2)
     return sigma * zz + mean
+    
+def random_poisson(lambd):
+    """Returns a poisson distrubed random number"""
+    k = 0
+    u_list = []
+    middle_value = exp(-lambd)
+    while True:
+        k += 1
+        u_list.append(random.random())
+        left_side = product(u_list)
+        right_side = product(u_list[0:-1])
+        if left_side <= middle_value < right_side:
+            break
+    return k - 1
+        
+def random_binom(n, p):
+    """Returns a binomial distributed random number"""
+    z = 0
+    # create n random numbers between [0,1]
+    for i in range(n):
+        rand = random.random()
+        z += 1 if rand < p else 0
+    return z
+    
+def product(list):
+    """Returns the product of product of the list"""
+    p = 1
+    for i in list:
+        p *= i
+    return p
+    
 
 def random_choice(choices):
     """This function takes a list of choices and randomly picks one out of it and returns the element"""
