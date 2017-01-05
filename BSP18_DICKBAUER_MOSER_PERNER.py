@@ -8,7 +8,7 @@ from lib import user_input, loaded_random_choice, random_number_from_interval
 
 VISITORS = 30
 
-ALTERNATIVE = False
+ALTERNATIVE = True
 ZZ_FIVE, ZZ_TEN = 1, 0
 ALTERNATIVE_LIST = [ZZ_FIVE] * 15 + [ZZ_TEN] * 15
 assert (ALTERNATIVE and VISITORS <= len(ALTERNATIVE_LIST)) or not ALTERNATIVE
@@ -39,7 +39,7 @@ def new_customer_has_a_5():
 def main():    
     queue = []
     visits = 0
-    fives = user_input([['Wieviele 5 Euro Scheine sind in der Kassa', int, 1]])[0]
+    fives = user_input([['How many notes to 5 Euro are in the cash desk', int, 1]])[0]
     tens = 0
     cum_queue_length = 0
     iterations = 0
