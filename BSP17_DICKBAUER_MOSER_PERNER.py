@@ -36,7 +36,7 @@ def main():
         if served == 1 and waiting >= 1:
             waiting -= 1
             customer_served.append(1)
-        else: 
+        else:
             customer_served.append(0)
         customer_waiting.append(waiting)
         customer_arrivals.append(arrived)
