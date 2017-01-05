@@ -4,7 +4,7 @@
     WS 2016
 """
 
-from lib import user_input, random_std
+from lib import random_std
 
 SIMULATION = 50
 PROFIT = 3
