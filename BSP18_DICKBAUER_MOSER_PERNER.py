@@ -39,7 +39,7 @@ def new_customer_has_a_5():
 def main():    
     queue = []
     visits = 0
-    fives = user_input([['Wieviele 5 Euro Scheine sind in der Kassa', int, 1]])[0]
+    fives = user_input([['How many notes to 5 Euro are in the cash desk', int, 1]])[0]
     tens = 0
     cum_queue_length = 0
     iterations = 0
