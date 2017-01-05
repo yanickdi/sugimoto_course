@@ -43,7 +43,7 @@ def main ():
         print("Overtime Costs: {:>10.2f}, Overtime Sales: {:>10.2f}, Overtime Profit:     {:>10.2f}".format(costs_overtime, sales_overtime, profit_overtime))
         print()
     
-    print("Sum Profit Normal: {:>10.2f}, Sum Profit Overtime: {:>10.2f})".format(sum_profit_normal, sum_profit_overtime))
+    print("Sum Profit Normal: {:>10.2f}, Sum Profit Overtime: {:>10.2f}".format(sum_profit_normal, sum_profit_overtime))
     
         
 main()
