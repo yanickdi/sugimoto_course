@@ -1,9 +1,17 @@
 import random
+from math import sin, log, pi
 
 def random_number_from_interval(lower, upper):
     """Returns a random number out of the interval (lower, upper["""
     val = random.random()
     return lower + (upper -lower) * val
+    
+def random_std(mean=0, sigma=1):
+    """Returns a normally distrubed random number"""
+    # create two random numbers [0,1(
+    u1, u2 = random.random(), random.random()
+    zz = (-2 * log(u1))**(1/2) * sin(2 * pi * u2)
+    return sigma * zz + mean
 
 def random_choice(choices):
     """This function takes a list of choices and randomly picks one out of it and returns the element"""
