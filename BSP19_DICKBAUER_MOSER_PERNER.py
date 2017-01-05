@@ -13,21 +13,14 @@ SUNK_COSTS = 5
 
 
 def main ():
-    
-    production_list = []
-    demand_list = []
-    overtime_production_list = []
     sum_profit_normal = 0
     sum_profit_overtime = 0
 
     for i in range(SIMULATION):
         # creation of random numbers according to normally distributed demand, production, ot distributions
-        production = random_std(100000,2000)
-        demand = random_std(110000,20000)
-        overtime_production = random_std(10000,200)
-        production_list.append(production)
-        demand_list.append(demand)
-        overtime_production_list.append(overtime_production)
+        production = random_std(100000, 2000)
+        demand = random_std(110000, 20000)
+        overtime_production = random_std(10000, 200)
         # calculations for sales, costs, and profits
         sales_normal = min(production, demand)
         sales_overtime = min(production + overtime_production, demand)

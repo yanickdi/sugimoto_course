@@ -1,0 +1,16 @@
+ \begin{frame}[fragile]{Funktion random\_std(..)}
+  \begin{itemize}
+    \item Diese Funktion verlangt zwei optionale Parameter: $\mu$ und $\sigma$ welche per default auf 0 und 1 gesetzt sind
+    \item Gibt eine normalverteilte Zufallszahl zurück
+    \item N(0,1) := $\sqrt{-2 ln(u_1)} sin(2 \pi u_2)$ mit $u_1, u_2 = ZZ(0,1)$
+    \item Anschließend Transformation: $\sigma N(0,1) + \mu$
+  \end{itemize}
+  \begin{lstlisting}[language=python]
+def random_std(mean=0, sigma=1):
+    """Returns a normally distrubed random number"""
+    u1, u2 = random.random(), random.random()
+    zz = (-2 * log(u1))**(1/2) * sin(2 * pi * u2)
+    return sigma * zz + mean
+\end{lstlisting}
+\logopythonbottom
+\end{frame}	

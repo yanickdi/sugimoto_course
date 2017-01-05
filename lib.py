@@ -8,7 +8,7 @@ def random_number_from_interval(lower, upper):
     
 def random_std(mean=0, sigma=1):
     """Returns a normally distrubed random number"""
-    # create two random numbers [0,1(
+    # create two random numbers between (0, 1[
     u1, u2 = random.random(), random.random()
     zz = (-2 * log(u1))**(1/2) * sin(2 * pi * u2)
     return sigma * zz + mean
