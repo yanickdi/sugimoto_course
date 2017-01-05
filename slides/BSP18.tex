@@ -70,7 +70,22 @@ an 5- und 10-Euro-Scheinen in der Kasse.
 \subsection{Verwendete Funktionen}
 %\include{lib_euclidean_distance}
 %\include{lib_random_number_from_interval}
-\include{lib_user_input}
+
+ \begin{frame}[fragile]{Funktion random\_std(..)}
+  \begin{itemize}
+    \item Diese Funktion verlangt zwei optionale Parameter: $\mu$ und $\sigma$ welche per default auf 0 und 1 gesetzt sind
+    \item Gibt eine normalverteilte Zufallszahl zurück
+    \item Analog zur Folie im Unterricht
+  \end{itemize}
+  \begin{lstlisting}[language=python]
+def random_std(mean=0, sigma=1):
+    """Returns a normally distrubed random number"""
+    u1, u2 = random.random(), random.random()
+    zz = (-2 * log(u1))**(1/2) * sin(2 * pi * u2)
+    return sigma * zz + mean
+\end{lstlisting}
+\logopythonbottom
+\end{frame}	
 
 
 \end{document}
