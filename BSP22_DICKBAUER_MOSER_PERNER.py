@@ -72,7 +72,7 @@ def main():
             # take the first out of the queue and start to process it
             product_in_machine = queue.pop(0)
         else:
-            # there is a machine in the queue, reduce its processing time
+            # there is a product in the queue, reduce its processing time
             product_in_machine.remaining_time -= 1
             # is the product now finished?
             if product_in_machine.remaining_time == 0:
