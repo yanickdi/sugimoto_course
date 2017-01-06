@@ -66,34 +66,46 @@ Kennzahlen.
 \begin{frame}[fragile]{Main Funktion - Programmeinstieg}
   \begin{lstlisting}[language=python]
 def main():
-	pass
+    print('Starting the warming phase (8 hours):\n')
+    simulate_system(8) 
+    
+    for i in range(5): print()
+    print('Starting the real simulation (800h):')
+    simulate_system(800)
 \end{lstlisting}
 \logopythonbottom
+
+  \begin{itemize}
+  	\item Funktion simulate\_system(): siehe .py file bzw. Flow Chart
+  \end{itemize}
 \end{frame}
 
 \subsection{Verwendete Funktionen}
 %\include{lib_euclidean_distance}
 %\include{lib_random_number_from_interval}
-\include{lib_user_input}
+\include{lib_random_number_from_interval}
+\include{lib_loaded_random_choice}
 
-\section{Beispiel}
-\begin{frame}[fragile]{Beispiel anhand fixer Zufallszahlen}
-\begin{itemize}
-\item Annahme der Zufallszahlen wie folgt:
-\end{itemize}
-\begin{center}
-  \begin{tabular}{c|c|c|c|c}
-  \hline 
-  iteration & 0 & 1 & 2 & 3\\ 
-  \hline 
-  ZZ      & 1 & 2 & 3 & 4 \\ 
-  \end{tabular} 
-\end{center}
-\begin{easylist}
-\ListProperties(Hide=100, Hang=true, Progressive=3ex, Style*= ,
-Style2*=$\bullet$ ,Style3*=$\circ$ ,Style4*=\tiny$\blacksquare$ )
-& blub
-\end{easylist}
-\end{frame}
+ \begin{frame}[fragile]{Funktion random\_exp(n, p)}
+  \begin{columns}
+  \column{.49\textwidth}
+    \begin{itemize}
+  	\item Erzeugt exponential verteilte Zufallszahl
+  	\item Gemäß Inversionsmethode:
+  	\item $ZZ = -\frac{1}{\lambda} ln(u)$ mit u=R(0,1)
+  \end{itemize}
+  \begin{lstlisting}[language=python]
+def random_exp(lambd):
+    rand = random.random()
+    return -(1/lambd) * log(rand)
+\end{lstlisting}
+\logopythonbottom
+  \column{.49\textwidth}
+    	\begin{figure}[h!]
+    	\includegraphics[scale=0.3]{lib_random_exp_wahrscheinlichkeitsverteilung.png}
+  			\caption{Wahrscheinlichkeitsverteilung der Exponentialverteilung \tiny{(Wikipedia)}}
+		\end{figure}
+  \end{columns}
+\end{frame}	
 
 \end{document}
