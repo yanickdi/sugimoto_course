@@ -1,0 +1,83 @@
+\include{settings}
+
+\title[BSP18 - Restgeld]{Restgeld}
+\author{Dickbauer Y., Moser P., Perner M.}
+\institute{PS Computergestützte Modellierung, WS 2016/17}
+%\date{Date of Presentation}
+
+\begin{document}
+
+\begin{frame}
+  \titlepage
+\end{frame}
+
+\begin{frame}{Outline}
+  \tableofcontents
+\end{frame}
+
+\section{Aufgabenstellung}
+\begin{frame}{Aufgabenstellung}
+30 Besucher wollen zu einer Veranstaltung. Der Eintritt zur Veranstaltung beträgt 5
+Euro. Die Besucher der Veranstaltung können entweder mit 5-Euro oder 10-Euro-Scheinen
+bezahlen. In der Kasse liegt zu Beginn eine konfigurierbare Anzahl an 5-Euro-Scheinen.
+
+\begin{block}{Grundproblem}
+Die Wahrscheinlichkeit, dass ein Besucher mit einem 10-Euro-Schein bezahlen
+möchte, beträgt 60 Prozent, dass ein Besucher mit einem 5-Euro-Schein bezahlen
+möchte, beträgt 40 Prozent.   
+\end{block}
+
+\begin{block}{Alternative}
+Es gibt 15 Personen mit einem 10 Euro-Schein und 15 Personen mit einem
+5 Euro-Schein, die in zufälliger Reihenfolge zur Kasse kommen.
+\end{block}
+\end{frame}
+
+
+\begin{frame}{Aufgabenstellung}
+Stellen Sie bei den einzelnen Alternativen mittels Simulation fest, ob jeweils genug 5-
+Euro-Scheine in der Kasse sind, damit die Besucher mit 10-Euro-Schein das Restgeld
+bekommen. Stellen Sie fest, ob bzw. wie viele Besucher warten müssen und wie lange sie
+warten müssen bzw. ob Besucher am Ende sogar ohne Restgeld übrig bleiben. Stellen Sie
+im Rahmen der Präsentation den Ablauf des Programmes anhand von selbstgewählten
+Zufallszahlen vor.
+
+\begin{itemize}
+  \item Eingabe: Anzahl an 5-Euro-Scheinen zu Beginn
+  \item Output: Je Runde Geldschein, mit dem der Kunde bezahlen möchte, und Anzahl
+an 5- und 10-Euro-Scheinen in der Kasse.
+\end{itemize}
+\end{frame}
+
+
+\section{Flow Chart}
+\begin{frame}{Flow Chart Hauptprogramm Grundproblem}
+	\centering
+  	\includegraphics[scale=0.4]{BSP18_Flow_Chart_1.pdf}
+\end{frame}
+
+\begin{frame}{Flow Chart Unterprozess Serve Customer}
+	\centering
+  	\includegraphics[scale=0.25]{BSP18_Flow_Chart_2.pdf}
+\end{frame}
+
+\begin{frame}{Flow Chart Unterprozess new\_customer\_has\_a\_5() inklusive Alternative}
+	\centering
+  	\includegraphics[scale=0.3]{BSP18_Flow_Chart_3.pdf}
+\end{frame}
+
+
+\subsection{Verwendete Funktionen}
+%\include{lib_euclidean_distance}
+%\include{lib_random_number_from_interval}
+\include{lib_user_input}
+\include{lib_loaded_random_choice}
+
+\section{Beispiel}
+\begin{frame}[fragile]{Beispiel anhand fixer Zufallszahlen}
+	\centering
+  	\includegraphics[scale=.5]{BSP18_Zufallszahlen.png}
+\end{frame}
+
+
+\end{document}
