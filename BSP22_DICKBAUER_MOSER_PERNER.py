@@ -14,7 +14,10 @@ PROD_TYPE_2 = 1
 
 MAX_QUEUE_LENGTH = 5
 
-Product = namedtuple('Product', ['type', 'processing_time'])
+class Product:
+    def __init__(self, type, processing_time):
+        self.type = type
+        self.processing_time = processing_time
 
 def generate_processing_time(product_type):
     """Returns a simulated processing time in simulation intervals for a product of type `product_type`"""
@@ -28,8 +31,7 @@ def generate_processing_time(product_type):
     return int(minutes * 60 * SIM_FREQUENCY)
         
 def generate_product():
-    """Generates a product and returns a `Product` tuple (defined at the top of
-    this file - like a struct in C ;-) )"""
+    """Generates a product and returns a Product"""
     # type is rigged - 0.4 probabilty for type 1, 0.6 type 2
     choice_index = loaded_random_choice([0.4, 0.6])
     type = [PROD_TYPE_1, PROD_TYPE_2][choice_index]
@@ -47,8 +49,9 @@ def main():
     # simulate 8h in intervals of seconds:
     queue = []
     time_until_next_product = 0
+    product_in_machine = None
     nr_eliminated = 0
-    for t in range( int(SIM_STEPS_PER_HOUR * 0.02) ): #8h
+    for t in range( int(SIM_STEPS_PER_HOUR * 8) ): #8h
         # the queue part:
         if time_until_next_product == 0:
             # create a new product, append to queue and wait for the next one
@@ -58,13 +61,21 @@ def main():
                 nr_eliminated += 1
             else:
                 queue.append(product)
-                print(queue[-1].processing_time)
             time_until_next_product = generate_time_until_next_product()
         else:
             time_until_next_product -= 1
             
-        
-        print(len(queue))
+        #the production part: we can serve one product at once
+        if product_in_machine == None and len(queue) > 0:
+            # take the first out of the queue and start to process it
+            product_in_machine = queue.pop(0)
+        else:
+            # there is a machine in the queue, reduce its processing time
+            product_in_machine.processing_time -= 1
+            # is the product now finished?
+            if product_in_machine.processing_time == 0:
+                # remove product
+                pass
 main()
 
 
