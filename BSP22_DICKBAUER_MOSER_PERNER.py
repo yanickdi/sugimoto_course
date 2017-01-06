@@ -6,7 +6,7 @@
 from collections import namedtuple
 from lib import random_exp, random_number_from_interval, loaded_random_choice
 
-SIM_FREQUENCY = 1 # or simulation intervals per second
+SIM_FREQUENCY = .1 # or simulation intervals per second - check every 10 seconds
 SIM_STEPS_PER_HOUR = SIM_FREQUENCY * 60 * 60
 
 PROD_TYPE_1 = 0
@@ -20,6 +20,7 @@ class Product:
         self.type = type
         self.processing_time = processing_time
         self.inspection_time = None # will be set maybe later
+        self.creation_time = None # the iteration number where it arrives at the system
 
 def generate_processing_time(product_type):
     """Returns a simulated processing time in simulation intervals for a product of type `product_type`"""
@@ -73,15 +74,21 @@ def simulate_system(hours):
     remaining_inspection_time = None
     
     nr_eliminated = 0
+    nr_generated_products = 0
     nr_finished_products = 0
     nr_finished_system = 0
     nr_defect_products = 0
+    sum_time_product_in_system = 0
     
-    for t in range( int(SIM_STEPS_PER_HOUR * hours) ):
+    simulation_iteration_data = []
+    
+    for t in range(int(SIM_STEPS_PER_HOUR * hours)):
         # THE QUEUE PART:
         if time_until_next_product == 0:
             # create a new product, append to queue and wait for the next one
             product = generate_product()
+            product.creation_time = t
+            nr_generated_products += 1
             if len(queue) + 1 > MAX_QUEUE_LENGTH:
                 # eliminate!
                 nr_eliminated += 1
@@ -118,24 +125,51 @@ def simulate_system(hours):
             if remaining_inspection_time == 0:
                 # remove product out of the inspection
                 nr_finished_system += 1
+                sum_time_product_in_system += t - product_in_inspection.creation_time
                 nr_defect_products += 1 if is_product_defect(product_in_inspection) else 0
                 product_in_inspection = None
         else:
             # nothing to do on the inspection machine
             pass
-            
         
-    print('Finished products: ', nr_finished_products)
+        # save some data of this iteration to simulation_iteration_data for evaluation later
+        simulation_iteration_data.append(
+            {'queue_length': len(queue),
+            'inspection_queue_length': len(inspection_queue),
+            'is_machine_working': product_in_machine is not None or len(queue) > 0,
+            'is_inspection_working': product_in_inspection is not None or len(inspection_queue) > 0
+            })
+            
+    # evaluation
+    print('a)')
+    print('Incoming products: ', nr_generated_products)
     print('Eliminated products: ', nr_eliminated)
+    print('Finished products on machine: ', nr_finished_products)
     print('Products that finished the system:', nr_finished_system)
     print('Inspection queue length: ', len(inspection_queue))
+    if remaining_processing_time is not None and remaining_processing_time > 0:
+        print('1 product is still in processing')
     if remaining_inspection_time is not None and remaining_inspection_time > 0:
-        print('One product is still in inspection')
+        print('1 finished product is still in inspection')
+    print('\nb)')
+    avg_queue_length = sum(it['queue_length'] for it in simulation_iteration_data) / len(simulation_iteration_data)
+    avg_insp_queue_length = sum(it['inspection_queue_length'] for it in simulation_iteration_data) / len(simulation_iteration_data)
+    utilization_machine = sum(it['is_machine_working'] for it in simulation_iteration_data) / len(simulation_iteration_data)
+    utilization_inspection = sum(it['is_inspection_working'] for it in simulation_iteration_data) / len(simulation_iteration_data)
+    print('Average queue length of machine: {:.3f}'.format(avg_queue_length))
+    print('Average queue length of inspection: {:.3f}'.format(avg_insp_queue_length))
+    print('Utilization of machine: {:.2f}%'.format(utilization_machine*100))
+    print('Utilization of inspection: {:.2f}%'.format(utilization_inspection*100))
+    print('\nc)')
+    avg_system_time = (sum_time_product_in_system / nr_finished_system) / (SIM_FREQUENCY * 60)
+    print('Average time of a finished product from arriving at the first queue to system finish: {:.2f} minutes'.format(avg_system_time))
+    
+    
     
 def main():
-    print('Starting the warming phase (8 hours):')
+    print('Starting the warming phase (8 hours):\n')
     simulate_system(8) #warming phase (not sure why we do this since we delete all variables after it..)
-    return
+    
     for i in range(5): print()
     print('Starting the real simulation (800h):')
     simulate_system(800)
