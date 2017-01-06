@@ -36,6 +36,11 @@ def random_binom(n, p):
         z += 1 if rand < p else 0
     return z
     
+def random_exp(lambd):
+    """Returns a binomial distributed random number"""
+    rand = random.random()
+    return -(1/lambd) * log(rand)
+    
 def product(list):
     """Returns the product of product of the list"""
     p = 1
