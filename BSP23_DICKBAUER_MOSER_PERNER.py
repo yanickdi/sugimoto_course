@@ -3,16 +3,18 @@
     Dickbauer Yanick 1030489, Moser Patrick 1114954, Perner Manuel 0633155
     WS 2016
 """
-
+import sys
 from lib import loaded_random_choice
 
-NO_MACHINES = 3
 
-NORMAL_PROCESSING_TIME_PER_MACHINE = 2 # minute per machine
-LONG_PROCESSING_TIME_PER_MACHINE = 10 # minutes
+PRINT_EVERY_STEP = False
+
+NO_MACHINES = 3
+NORMAL_PROCESSING_TIME_PER_MACHINE = 1 # minute per machine
+LONG_PROCESSING_TIME_PER_MACHINE = 5 # minutes
 FAULTY_PART_RATIO = 0.15 # probabilty of having a faulty product that takes more time on each machine
 
-SIMULATION = 10 #minutes
+SIMULATION = 180 #minutes
 
 
 class Product:
@@ -25,9 +27,10 @@ class Product:
            self.time_per_machine = NORMAL_PROCESSING_TIME_PER_MACHINE
         self.remaining_t_on_m = self.time_per_machine
 
-def simulte_assembly_line(minutes, nr_machines, buffer_size):
+def simulate_assembly_line(minutes, nr_machines, buffer_size, print_every_step=True):
     nr_jobs_created = 0
     nr_jobs_finished = 0
+    simulation_iteration_data = []
     
     # create buffers (empty queues) before each machines:
     buffers = [[] for i in range(nr_machines)]
@@ -61,7 +64,7 @@ def simulte_assembly_line(minutes, nr_machines, buffer_size):
                 # there is a job on this machine, reduce its remaining time
                 act_job = machines_act_job[act_machine_nr]
                 act_job.remaining_t_on_m -= 1
-                if act_job.remaining_t_on_m == 0:
+                if act_job.remaining_t_on_m <= 0:
                     # job is done - move it further
                     next_machine_nr = act_machine_nr + 1
                     if next_machine_nr == nr_machines:
@@ -77,26 +80,51 @@ def simulte_assembly_line(minutes, nr_machines, buffer_size):
                             _check_before_machine(act_machine_nr)
                         else:
                             # next machine not free - move it to the queue
-                            buffers[next_machine_nr].append(act_job)
-                            act_job.remaining_t_on_m = act_job.time_per_machine
-                            machines_act_job[act_machine_nr] = None
-                            #buffers[next_machine_nr].append(act_job)
-                            #act_job.remaining_t_on_m = act_job.time_per_machine
-                            pass
-                        
-        print('t={}'.format(t))
-        for i in range(nr_machines):
-            job_on_machine = machines_act_job[i]
-            queue_before = buffers[i]
-            print('  Machine #{}:'.format(i+1))
-            print('    Job id on machine: {} - remaining time on machine: {}'.format(
-                job_on_machine.id if job_on_machine is not None else '-',
-                job_on_machine.remaining_t_on_m if job_on_machine is not None else '-'))
-            print('    Jobs in queue before: {}'.format([job.id for job in queue_before]))
-        print('\n')
+                            if len(buffers[next_machine_nr]) >= buffer_size:
+                                # buffer is full already, set its remaining time to -1
+                                act_job.remaining_t_on_m = -1
+                            else:
+                                # ok, we can move it to the queue
+                                buffers[next_machine_nr].append(act_job)
+                                act_job.remaining_t_on_m = act_job.time_per_machine
+                                machines_act_job[act_machine_nr] = None
+                                
+        # save some data of this iteration to simulation_iteration_data for evaluation later
+        simulation_iteration_data.append(
+            {'machine_is_processing' : [machines_act_job[i] is not None and machines_act_job[i].remaining_t_on_m >= 0 for i in range(nr_machines)],
+            'machine_is_idle' : [machines_act_job[i] is None or machines_act_job[i].remaining_t_on_m < 0 for i in range(nr_machines)],
+            'queue_length' : [len(buffers[i]) for i in range(nr_machines)]
+        })
+        
+        if print_every_step:
+            print('t={}'.format(t))
+            for i in range(nr_machines):
+                job_on_machine = machines_act_job[i]
+                queue_before = buffers[i]
+                print('  Machine #{}:'.format(i+1))
+                print('    Job id on machine: {} - remaining time on machine: {}'.format(
+                    job_on_machine.id if job_on_machine is not None else '-',
+                    job_on_machine.remaining_t_on_m if job_on_machine is not None else '-'))
+                print('    Jobs in queue before: {}'.format([job.id for job in queue_before]))
+            print('\n')
+            
+    # evaluation
+    print('Number of Jobs finished: ', nr_jobs_finished)
+    for i in range(nr_machines):
+        utilization_machine = sum(it['machine_is_processing'][i] for it in simulation_iteration_data) / len(simulation_iteration_data)
+        cum_idle_time = sum(it['machine_is_idle'][i] for it in simulation_iteration_data)
+        avg_queue_length = sum(it['queue_length'][i] for it in simulation_iteration_data) / len(simulation_iteration_data)
+        print('Utilization of machine {}: {:.2f}%'.format(i, utilization_machine*100))
+        print('Cumulated idle time of machine {}: {} seconds'.format(i+1, cum_idle_time))
+        print('Average queue length before machine {}: {:.3f}'.format(i, avg_queue_length))
+        print()
 
 
 def main ():
-    simulte_assembly_line(180, 5, buffer_size=0)
+    print('Simulation without buffer between machines: ')
+    simulate_assembly_line(SIMULATION, NO_MACHINES, buffer_size=0, print_every_step=PRINT_EVERY_STEP)
+    print('\n')
+    print('Simulation with unlimited buffer between machines: ')
+    simulate_assembly_line(SIMULATION, NO_MACHINES, buffer_size=sys.maxsize, print_every_step=PRINT_EVERY_STEP)
 
 main()
