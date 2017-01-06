@@ -37,7 +37,7 @@ def random_binom(n, p):
     return z
     
 def random_exp(lambd):
-    """Returns a binomial distributed random number"""
+    """Returns an exponential distributed random number"""
     rand = random.random()
     return -(1/lambd) * log(rand)
     
