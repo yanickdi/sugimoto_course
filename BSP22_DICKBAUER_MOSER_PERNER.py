@@ -18,6 +18,7 @@ class Product:
     def __init__(self, type, processing_time):
         self.type = type
         self.processing_time = processing_time
+        self.remaining_time = processing_time
 
 def generate_processing_time(product_type):
     """Returns a simulated processing time in simulation intervals for a product of type `product_type`"""
@@ -51,6 +52,7 @@ def main():
     time_until_next_product = 0
     product_in_machine = None
     nr_eliminated = 0
+    nr_finished_products = 0
     for t in range( int(SIM_STEPS_PER_HOUR * 8) ): #8h
         # the queue part:
         if time_until_next_product == 0:
@@ -65,17 +67,22 @@ def main():
         else:
             time_until_next_product -= 1
             
-        #the production part: we can serve one product at once
+        #the production part: we can serve only one product at once
         if product_in_machine == None and len(queue) > 0:
             # take the first out of the queue and start to process it
             product_in_machine = queue.pop(0)
         else:
             # there is a machine in the queue, reduce its processing time
-            product_in_machine.processing_time -= 1
+            product_in_machine.remaining_time -= 1
             # is the product now finished?
-            if product_in_machine.processing_time == 0:
-                # remove product
-                pass
+            if product_in_machine.remaining_time == 0:
+                # remove product and take the next product out of the queue
+                product_in_machine = None
+                nr_finished_products += 1
+                if len(queue) > 0: product_in_machine = queue.pop(0)
+                
+    print('Finished products: ', nr_finished_products)
+    print('Eliminated products: ', nr_eliminated)
 main()
 
 
