@@ -15,7 +15,7 @@ HOURS_SHUTDOWN_ONE = 1
 
 
 def simulate_replace_all():
-    print('Start simulation of replacing only one tube at once:')
+    print('Start simulation of replacing all tubes at failure of one:')
     vacuum_tube_list = []
     remain_hours = SIMULATION
     count_replacement = 0
@@ -45,7 +45,7 @@ def simulate_replace_all():
     print('Nr. of shutdowns: {}'.format(count_replacement))
     
 def simulate_replace_one():
-    print('Start simulation of replacing only one tube at once:')
+    print('Start simulation of replacing only the broken tube:')
     vacuum_tube_list = []
     remain_hours = SIMULATION
     count_replacement = 0
