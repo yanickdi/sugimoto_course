@@ -8,11 +8,11 @@ from lib import loaded_random_choice
 
 NO_MACHINES = 3
 
-NORMAL_PROCESSING_TIME_PER_MACHINE = 4 # minute per machine
+NORMAL_PROCESSING_TIME_PER_MACHINE = 2 # minute per machine
 LONG_PROCESSING_TIME_PER_MACHINE = 10 # minutes
-FAULTY_PART_RATIO = 0.5 # probabilty of having a faulty product that takes more time on each machine
+FAULTY_PART_RATIO = 0.15 # probabilty of having a faulty product that takes more time on each machine
 
-SIMULATION = 255 #minutes
+SIMULATION = 10 #minutes
 
 
 class Product:
@@ -39,6 +39,7 @@ def simulte_assembly_line(minutes, nr_machines, buffer_size):
             if there is no job on this machine, it checks if it can take one from before
         """
         assert machines_act_job[act_machine_nr] == None
+        nonlocal nr_jobs_created
         # no job on this machine, are we at the first machine?
         if act_machine_nr == 0:
             # we can create a new job and process it on this machine
@@ -73,6 +74,7 @@ def simulte_assembly_line(minutes, nr_machines, buffer_size):
                             machines_act_job[next_machine_nr] = act_job
                             act_job.remaining_t_on_m = act_job.time_per_machine
                             machines_act_job[act_machine_nr] = None
+                            _check_before_machine(act_machine_nr)
                         else:
                             # next machine not free - move it to the queue
                             buffers[next_machine_nr].append(act_job)
