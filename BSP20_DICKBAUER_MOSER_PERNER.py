@@ -51,7 +51,6 @@ def simulate_replace_one():
     count_replacement = 0
     costs = 0
     while remain_hours >= 0:
-        vacuum_tube_list = []
         # generate 4 new tubes at start, and 1 in the following iteration:
         for i in range(NO_OF_VACUUM_TUBES - len(vacuum_tube_list)):
             vacuum_tube_lifetime = max(random_std(1500, 500), 0)
