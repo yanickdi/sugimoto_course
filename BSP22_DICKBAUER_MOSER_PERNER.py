@@ -47,15 +47,24 @@ def main():
     # simulate 8h in intervals of seconds:
     queue = []
     time_until_next_product = 0
-    for t in range(SIM_STEPS_PER_HOUR * 8): #8h
+    nr_eliminated = 0
+    for t in range( int(SIM_STEPS_PER_HOUR * 0.02) ): #8h
+        # the queue part:
         if time_until_next_product == 0:
             # create a new product, append to queue and wait for the next one
             product = generate_product()
-            queue.append(product)
+            if len(queue) + 1 > MAX_QUEUE_LENGTH:
+                # eliminate!
+                nr_eliminated += 1
+            else:
+                queue.append(product)
+                print(queue[-1].processing_time)
             time_until_next_product = generate_time_until_next_product()
         else:
             time_until_next_product -= 1
-    print(len(queue))
+            
+        
+        print(len(queue))
 main()
 
 
