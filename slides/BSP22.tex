@@ -55,6 +55,31 @@ Kennzahlen.
 \end{itemize}
 \end{frame}
 
+\section{Interpretation und Vorgehensweise}
+\begin{frame}{Problem Fertigungssystem}
+\begin{itemize}
+  \item 2 verschieden Produkttypen mit jeweiligen Processing Time Intervallen
+  \item 1 Maschine
+  \item 1 Inspektionsstation
+  \item 2 Queues	
+  \begin{itemize}
+  	\item vor Maschine mit Kapazität 5
+  	\item vor Inspektionsstation mit Kapazität INF
+  \end{itemize}
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Simulation}
+\begin{itemize}
+  \item Simulation in Sekunden Schritten
+  \item Generation von exponential-verteilten ZZ für den Produktrelease in das Fertigungssystem
+  \item Produkttypen treten mit bestimmter WK auf
+  \item Generation von ZZ im gegeben Produktionsprozessintervall
+  \item Fehler treten mit gewisser WK auf
+\end{itemize}
+\end{frame}
+
+
 \section{Flow Chart}
 \begin{frame}{Flow Chart}
 	\centering
@@ -85,27 +110,54 @@ def main():
 %\include{lib_random_number_from_interval}
 \include{lib_random_number_from_interval}
 \include{lib_loaded_random_choice}
+\include{lib_random_exp}
 
- \begin{frame}[fragile]{Funktion random\_exp(n, p)}
-  \begin{columns}
-  \column{.49\textwidth}
-    \begin{itemize}
-  	\item Erzeugt exponential verteilte Zufallszahl
-  	\item Gemäß Inversionsmethode:
-  	\item $ZZ = -\frac{1}{\lambda} ln(u)$ mit u=R(0,1)
+\begin{frame}[fragile]{Produktrelease: Funktion generate\_time\_until\_next\_product(..)}
+  \begin{itemize}
+  	\item Exponentialverteilung
+  	\item $\lambda$ = 4 (Minuten)
+  	\item Beispiel:
+  	\begin{itemize}
+  		\item ZZ1 = 0.83
+  		\item ZZ = $- \frac{1}{4} ln(0.83) \Rightarrow 0.0202 * 60 = 1.212 sek$
+  	\end{itemize}
   \end{itemize}
-  \begin{lstlisting}[language=python]
-def random_exp(lambd):
-    rand = random.random()
-    return -(1/lambd) * log(rand)
-\end{lstlisting}
-\logopythonbottom
-  \column{.49\textwidth}
-    	\begin{figure}[h!]
-    	\includegraphics[scale=0.3]{lib_random_exp_wahrscheinlichkeitsverteilung.png}
-  			\caption{Wahrscheinlichkeitsverteilung der Exponentialverteilung \tiny{(Wikipedia)}}
-		\end{figure}
-  \end{columns}
 \end{frame}	
+
+\begin{frame}[fragile]{Funktionen zur Produkterzeugung und Processing:}
+  \begin{itemize}
+  	\item Funktion: generate\_product():
+  	  \begin{itemize}
+  		\item erzeugt mittels einer loaded\_random\_choice Funktion entweder Produtktyp 1 oder 2
+  	\end{itemize}
+  	\vspace{1cm}
+  	\item Funktion: generate\_processing\_time():
+  	  \begin{itemize}
+		\item erzeugt gegeben des Produkttyps aus einer random\_number\_from\_interval Funktion eine ZZ ( processing time in Minuten)
+  	\end{itemize}
+  \end{itemize}
+\end{frame}	
+
+\begin{frame}[fragile]{Funktionen zur Inspektion:}
+  \begin{itemize}
+  	\item Funktion: is\_product\_defect():
+  	  \begin{itemize}
+  		\item sagt aus, ob Produkt einen Defekt hat (mit Hilfe von loaded\_random\_choice)
+  	\end{itemize}
+  	\vspace{1cm}
+  	\item Funktion: generate\_inspection\_time():
+  	  \begin{itemize}
+		\item mit Hilfe von random\_number\_from\_interval
+  	\end{itemize}
+  \end{itemize}
+\end{frame}	
+
+\section{Beispiel}
+\begin{frame}[fragile]{Berechnung eines Durchlaufs}
+\begin{center}
+	\vspace{-.8cm}
+  	\includegraphics[scale=.3]{BSP22_Berrechnung_2Produkte.pdf}
+\end{center}
+\end{frame}
 
 \end{document}
