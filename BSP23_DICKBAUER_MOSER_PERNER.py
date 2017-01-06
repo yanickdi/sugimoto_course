@@ -55,15 +55,7 @@ def simulte_assembly_line(minutes, nr_machines, buffer_size):
         for act_machine_nr in reversed(range(nr_machines)):
             #is there a job on that machine?
             if machines_act_job[act_machine_nr] == None:
-                # no job on this machine, are we at the first machine?
-                if act_machine_nr == 0:
-                    # we can create a new job and process it on this machine
-                    machines_act_job[0] = Product(nr_jobs_created)
-                    nr_jobs_created += 1
-                # is there a job on the queue before?
-                elif len(buffers[act_machine_nr]) > 0:
-                    # move the first job out of the queue onto this machine
-                    machines_act_job[act_machine_nr] = buffers[act_machine_nr].pop(0)
+                _check_before_machine(act_machine_nr)
             else:
                 # there is a job on this machine, reduce its remaining time
                 act_job = machines_act_job[act_machine_nr]
