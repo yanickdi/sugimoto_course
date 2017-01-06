@@ -97,7 +97,7 @@ def simulate_system(hours):
             product_in_machine = queue.pop(0)
             remaining_processing_time = product_in_machine.processing_time
         else:
-            # there is a machine in the queue, reduce its processing time
+            # there is a product in the queue, reduce its processing time
             remaining_processing_time -= 1
             # is the product now finished?
             if remaining_processing_time == 0:
@@ -131,7 +131,6 @@ def simulate_system(hours):
     print('Inspection queue length: ', len(inspection_queue))
     if remaining_inspection_time is not None and remaining_inspection_time > 0:
         print('One product is still in inspection')
-    #print([prod.remaining_insp_time for prod in inspection_queue])
     
 def main():
     print('Starting the warming phase (8 hours):')
