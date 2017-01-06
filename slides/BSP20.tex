@@ -51,44 +51,38 @@ des Programmes anhand von selbstgewählten Zufallszahlen vor.
 \end{frame}
 
 \section{Flow Chart}
-\begin{frame}{Flow Chart}
+\begin{frame}{Flow Chart - Hauptprogramm}
 	\centering
-  	\includegraphics[scale=0.4]{FlowChartTodo.pdf}
+  	\includegraphics[scale=0.4]{BSP20_Flow_Chart.pdf}
 \end{frame}
 
-\section{Programmcode}
-\subsection{Main Funktion}
-\begin{frame}[fragile]{Main Funktion - Programmeinstieg}
-  \begin{lstlisting}[language=python]
-def main():
-	pass
-\end{lstlisting}
-\logopythonbottom
+\begin{frame}{Flow Chart - Variante Tasche alle Röhren}
+	\centering
+  	\includegraphics[scale=0.2]{BSP20_Flow_Chart_all.pdf}
+\end{frame}
+
+\begin{frame}{Flow Chart - Variante Tasche nur die kaputte Röhre}
+	\centering
+  	\includegraphics[scale=0.15]{BSP20_Flow_Chart_one.pdf}
 \end{frame}
 
 \subsection{Verwendete Funktionen}
 %\include{lib_euclidean_distance}
 %\include{lib_random_number_from_interval}
-\include{lib_user_input}
+\include{lib_random_std}
 
 \section{Beispiel}
-\begin{frame}[fragile]{Beispiel anhand fixer Zufallszahlen}
-\begin{itemize}
-\item Annahme der Zufallszahlen wie folgt:
-\end{itemize}
-\begin{center}
-  \begin{tabular}{c|c|c|c|c}
-  \hline 
-  iteration & 0 & 1 & 2 & 3\\ 
-  \hline 
-  ZZ      & 1 & 2 & 3 & 4 \\ 
-  \end{tabular} 
-\end{center}
-\begin{easylist}
-\ListProperties(Hide=100, Hang=true, Progressive=3ex, Style*= ,
-Style2*=$\bullet$ ,Style3*=$\circ$ ,Style4*=\tiny$\blacksquare$ )
-& blub
-\end{easylist}
+\begin{frame}[fragile]{Beispiel anhand fixer Zufallszahlen - Tausche alle Röhren}
+	\centering
+  	\includegraphics[scale=.5]{BSP20_Zufallszahlen_1.png}
 \end{frame}
+
+\begin{frame}[fragile]{Beispiel anhand fixer Zufallszahlen - Tausche einzelne Röhre}
+	\centering
+  	\includegraphics[scale=.5]{BSP20_Zufallszahlen_2.png}
+\end{frame}
+
+
+
 
 \end{document}
