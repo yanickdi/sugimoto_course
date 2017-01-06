@@ -143,10 +143,10 @@ def simulate_system(hours):
     # evaluation
     print('a)')
     print('Incoming products: ', nr_generated_products)
-    print('Eliminated products: ', nr_eliminated)
+    print('Eliminated products: {} ({:.2f}%)'.format(nr_eliminated, nr_eliminated/nr_generated_products*100))
     print('Finished products on machine: ', nr_finished_products)
     print('Products that finished the system:', nr_finished_system)
-    print('Inspection queue length: ', len(inspection_queue))
+    print('Defect products: {}, ({:.2f}% of finished)'.format(nr_defect_products, nr_defect_products/nr_finished_system*100))
     if remaining_processing_time is not None and remaining_processing_time > 0:
         print('1 product is still in processing')
     if remaining_inspection_time is not None and remaining_inspection_time > 0:
