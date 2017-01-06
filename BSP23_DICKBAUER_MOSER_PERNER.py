@@ -88,6 +88,7 @@ def simulate_assembly_line(minutes, nr_machines, buffer_size, print_every_step=T
                                 buffers[next_machine_nr].append(act_job)
                                 act_job.remaining_t_on_m = act_job.time_per_machine
                                 machines_act_job[act_machine_nr] = None
+                                _check_before_machine(act_machine_nr)
                                 
         # save some data of this iteration to simulation_iteration_data for evaluation later
         simulation_iteration_data.append(
