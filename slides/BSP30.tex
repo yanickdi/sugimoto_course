@@ -1,0 +1,45 @@
+\include{settings}
+
+\title[BSP30 - Supermarkt]{Supermarkt}
+\author{Dickbauer Y., Moser P., Perner M.}
+\institute{PS Computergestützte Modellierung, WS 2016/17}
+%\date{Date of Presentation}
+
+\begin{document}
+
+\begin{frame}
+  \titlepage
+\end{frame}
+
+\begin{frame}{Outline}
+  \tableofcontents
+\end{frame}
+
+\section{Aufgabenstellung}
+\begin{frame}{Aufgabenstellung}
+In einem Supermarkt gibt es derzeit zwei Kassen, die für alle Kunden zuständig ist. Da es etliche Kunden gibt, die nur wenige Waren kaufen, ist die Geschäftsführung am überlegen, eine dritte Kasse als Expresskasse einzuführen, um die Warteschlange zu verringern. Die Expresskasse ist nur für jene Kunden offen, die weniger als 5 Waren einkaufen.
+\\~\\
+Die Ankunftsrate für normale Kunden ist exponentialverteilt mit Erwartungswert von 3 Minuten, die Ankunftsrate von "Expresskunden" ist exponentialverteilt mit Erwartungswert von 5 Minuten. Die Bedienzeit von normalen Kunden ist exponentialverteilt mit Erwartungswert von 5 Minuten, die von "Expresskunden" ist ebenso exponentialverteilt mit Erwartungswert von 3 Minuten.
+\end{frame}
+
+\begin{frame}{Aufgabenstellung}
+Wie verändern sich die mittleren Schlangenlängen der einzelnen Kassen bei den unterschiedlichen Strategien?
+\vspace{1cm}
+\begin{itemize}
+  \item Eingabe: -
+  \item Output: Warteschlangenlänge am Periodenanfang je Kassa, Neuankunft und Typ, Abfertigung in Periode, sowie die oben angeführten Kennzahlen
+\end{itemize}
+\end{frame}
+
+\section{Flow Chart}
+\begin{frame}{Flow Chart}
+	\centering
+  	\includegraphics[scale=0.3]{FlowChartTodo.pdf}
+\end{frame}
+
+\subsection{Verwendete Funktionen}
+%\include{lib_loaded_random_choice}
+
+\section{Grafische Darstellung}
+
+\end{document}
