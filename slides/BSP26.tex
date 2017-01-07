@@ -1,0 +1,126 @@
+\include{settings}
+
+\title[BSP24 - Garantiezertifikat]{Garantiezertifikat}
+\author{Dickbauer Y., Moser P., Perner M.}
+\institute{PS Computergestützte Modellierung, WS 2016/17}
+%\date{Date of Presentation}
+
+\begin{document}
+
+\begin{frame}
+  \titlepage
+\end{frame}
+
+\begin{frame}{Outline}
+  \tableofcontents
+\end{frame}
+
+\section{Aufgabenstellung}
+\begin{frame}{Aufgabenstellung}
+Garantie-Zertifikate sichern entweder die Rückzahlung des gesamten oder eines bestimmten Prozentsatzes des eingesetzten Kapitals am Ende der Laufzeit zu. Zusätzlich wird der Anleger meist mit einer bestimmten Partizipationsrate am Kursanstieg des jeweiligen Basiswertes beteiligt. Alternativ ist eine Kuponzahlung möglich, die von der Entwicklung des Basiswertes abhängig ist.
+\\~\\
+Das folgende fiktive Garantiezertifikat ist mittels Simulation zu bewerten.
+\end{frame}
+
+
+\begin{frame}{Aufgabenstellung - 10 Titel}
+\begin{itemize}
+	\item Das Zertifikat läuft über 5 Jahre und umfasst 10 Titel, die in der untenstehenden Tabelle inklusive Volatilität zusammengefasst sind.
+	\vspace{.2cm}
+	\begin{center}
+	\begin{tabular}{l|l}
+	Alianz	 		& 35.2\% \\ 
+	BMW 			& 27.6\% \\ 
+	Canon 			& 29.3\% \\ 
+	E.On			& 21.7\% \\ 
+	France Telecom	& 27.6\% \\ 
+	Hewlett Packard & 34.6\% \\ 
+	ING Group 		& 31.4\% \\ 
+	Intel 			& 32.3\% \\ 
+	Lloyds 			& 23.4\% \\ 
+	Microsoft		& 24.6\% \\  
+	\end{tabular} 
+	\end{center}
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Aufgabenstellung - Zeitverlauf 5 Jahre}
+\begin{itemize}
+	\item T = 0: das Zertifikat wird mit einem Aufschlag von 3\% ausgegeben. Alle Titel werden zu diesem Zeitpunkt mit 100\% bewertet.
+	\item T = 1: garantierte 6\% Zinsen werden ausbezahlt
+	\item T = 2: Koupon von 10.0\% p.a., wenn keine der im Basket enthaltenen Aktien gleich
+oder unter 68\% ihres Anfangswertes notiert, oder 0.0\% p.a. andernfalls.
+	\item T = 3: Koupon von 10.0\% p.a., wenn keine der im Basket enthaltenen Aktien gleich
+oder unter 68\% ihres Anfangswertes notiert, oder 20.0\% p.a., wenn keine der im
+Basket enthaltenen Aktien gleich oder unter 68\% ihres Anfangswertes notiert und
+in der vorherigen Periode kein Kupon gezahlt worden ist, oder 0.0\% p.a. andernfalls.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Aufgabenstellung - Zeitverlauf 5 Jahre}
+\begin{itemize}
+	\item T = 4: Koupon von 10.0\% p.a., wenn keine der im Basket enthaltenen Aktien gleich
+oder unter 68\% ihres Anfangswertes notiert, oder 20.0\% p.a., wenn keine der im
+Basket enthaltenen Aktien gleich oder unter 68\% ihres Anfangswertes notiert und
+in der vorhergehenden Periode kein Kupon gezahlt worden ist, oder 30.0\% p.a., wenn
+keine der im Basket enthaltenen Aktien gleich oder unter 68\% ihres Anfangswertes
+notiert und in den beiden vorhergehenden Perioden kein Kupon gezahlt worden ist,
+oder 0.0\% p.a. andernfalls.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Aufgabenstellung - Zeitverlauf 5 Jahre}
+\begin{itemize}
+	\item T = 5: Koupon von 10.0\% p.a., wenn keine der im Basket enthaltenen Aktien gleich
+oder unter 68\% ihres Anfangswertes notiert, oder 20.0\% p.a., wenn keine der im
+Basket enthaltenen Aktien gleich oder unter 68\% ihres Anfangswertes notiert und
+in der vorhergehenden Periode kein Kupon gezahlt worden ist, oder 30.0\% p.a., wenn
+keine der im Basket enthaltenen Aktien gleich oder unter 68\% ihres Anfangswertes
+notiert und in den beiden vorhergehenden Perioden kein Kupon gezahlt worden ist,
+oder 40.0\% p.a., wenn keine der im Basket enthaltenen Aktien gleich oder unter 68\%
+ihres Anfangswertes notiert und in den drei vorhergehenden Perioden kein Kupon
+gezahlt worden ist, oder 0.0\% p.a. andernfalls.
+\end{itemize}
+
+\begin{itemize}
+	\item T = 6: Bei Fälligkeit Rückzahlung zu 100\% des Nominalbetrages.
+	\item Die jeweiligen Auszahlungen müssen mit dem risikofreien Zinssatz von 2\% abgezinst werden.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Aufgabenstellung - Simulation Wertänderung}
+
+Die Wertänderung des Titel kann über folgende Formel simuliert werden:
+\begin{equation*}
+	W_{t+1} = max\left \{ W_t \cdot e^{(rMarket - vola^2/2) \cdot time + vola \cdot N(0,1) \cdot \sqrt{time}} , 0\right \}
+\end{equation*}
+wobei
+\begin{itemize}
+	\item \textit{vola} für die oben angeführte Volatilität steht,
+	\item \textit{rMarket} für den Marktzinssatz (Annahme von 3\%),
+	\item \textit{time} für die Anzahl an Perioden, falls in einem Schritt über mehrere Perioden simuliert werden soll (in diesem Beispiel soll jeweils von einer Periode zur nächsten gewechselt werden),
+	\item und $N(0,1)$ für eine normalverteilte (0,1) Zufallszahl
+\end{itemize}
+\end{frame}
+
+
+\begin{frame}{Aufgabenstellung}
+\begin{itemize}
+  \item Eingabe: -
+  \vspace{1cm}
+  \item Output: Wertentwicklung der einzelnen Titel je Periode, Niedrigster Wert, Kouponzahlung je Periode, abgezinster Wert
+\end{itemize}
+\end{frame}
+
+\section{Flow Chart}
+\begin{frame}{Flow Chart}
+	\centering
+  	\includegraphics[scale=0.3]{FlowChartTodo.pdf}
+\end{frame}
+
+\subsection{Verwendete Funktionen}
+%\include{lib_loaded_random_choice}
+
+\section{Grafische Darstellung}
+
+\end{document}

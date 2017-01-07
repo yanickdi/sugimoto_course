@@ -1,0 +1,44 @@
+\include{settings}
+
+\title[BSP24 - Zufallszahlenüberprüfung]{Zufallszahlenüberprüfung}
+\author{Dickbauer Y., Moser P., Perner M.}
+\institute{PS Computergestützte Modellierung, WS 2016/17}
+%\date{Date of Presentation}
+
+\begin{document}
+
+\begin{frame}
+  \titlepage
+\end{frame}
+
+\begin{frame}{Outline}
+  \tableofcontents
+\end{frame}
+
+\section{Aufgabenstellung}
+\begin{frame}{Aufgabenstellung}
+Erzeugen Sie mit einem gemischten Kongruenzgenerator für verschiedene Parameter 100 Zufallszahlen zwischen 0 und 1. Die Parameter für den gemischten Kongruenzgenerator sollen hierbei flexibel eingegeben werden können oder automatisch in vorgegebenen Intervallen untersucht werden. Die resultierenden Zufallszahlen sollen mittels $\chi^2-Anpassungstest$ und Runtest auf Unabhängigkeit geprüft werden (siehe Vorlesungs-Folien). \\~\\
+Die Berechnung der Häufigkeiten ($\chi^2-Anpassungstest$) und Run-Länge, der zugehörigen $\chi^2$-Testgröße sowie der Vergleich mit dem korrespondierenden Wert aus der $\chi^2-Tabelle$ (z.B. zum 95\% Signifikanzniveau) soll dabei automatisch erfolgen, wobei die Werte der $\chi^2-Tabelle$ hard-codiert werden können.
+\end{frame}
+
+\begin{frame}{Aufgabenstellung}
+
+\begin{itemize}
+  \item Eingabe: Parameter für gemischten Kongruenzgenerator
+  \vspace{1cm}
+  \item Output: Zufallszahlen, Anzahl an Werten je Bereich, Annahme oder Ablehnung gemäß Tests
+\end{itemize}
+\end{frame}
+
+\section{Flow Chart}
+\begin{frame}{Flow Chart}
+	\centering
+  	\includegraphics[scale=0.3]{FlowChartTodo.pdf}
+\end{frame}
+
+\subsection{Verwendete Funktionen}
+%\include{lib_loaded_random_choice}
+
+\section{Grafische Darstellung}
+
+\end{document}
