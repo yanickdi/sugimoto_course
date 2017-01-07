@@ -1,0 +1,47 @@
+\include{settings}
+
+\title[BSP29 - Bankomat]{Bankomat}
+\author{Dickbauer Y., Moser P., Perner M.}
+\institute{PS Computergestützte Modellierung, WS 2016/17}
+%\date{Date of Presentation}
+
+\begin{document}
+
+\begin{frame}
+  \titlepage
+\end{frame}
+
+\begin{frame}{Outline}
+  \tableofcontents
+\end{frame}
+
+\section{Aufgabenstellung}
+\begin{frame}{Aufgabenstellung}
+Eine Bank muss entscheiden, wie viele Bankomaten installiert werden sollen, wenn alle 60 Sekunden (exponentialverteilt) ein neuer Kunde die Bank betritt. Die Zeit, die ein Kunde am Bankomat verbringt, ist exponentialverteilt mit dem Erwartungswert von 2 Minuten.
+\\~\\
+Eine Marktuntersuchung ergab, dass sich Kunden dann nicht mehr anstellen, wenn bereits drei oder mehr Personen warten. Die Aufgabenstellung eines Bankomaten beträgt 10.000 Euro; pro Kunde, der den Bankomaten anstelle des Schalters benutzt, spart sich die Bank 10 Cent. Der Bankomat ist täglich 15 Stunden in Betrieb.
+\end{frame}
+
+\begin{frame}{Aufgabenstellung}
+Simulieren Sie Strategien mit 1,2, und 3 Bankomaten und bestimmen Sie, wie viele Bankomaten aufgestellt werden sollen, damit die Kosteneinsparungen während des ersten Jahres möglichst groß sind.
+\\~\\
+Hinweis: simulieren Sie einen Tag und rechnen Sie das Ergebnis auf ein Jahr hoch.
+\vspace{1cm}
+\begin{itemize}
+  \item Eingabe: Anzahl an Bankomaten
+  \item Output: Warteschlangenlänge am Periodenanfang, Neuankunft (?), Abfertigung in Periode (?), Anzahl an weggegangenen Kunden, Kosten/Nutzenvergleich
+\end{itemize}
+\end{frame}
+
+\section{Flow Chart}
+\begin{frame}{Flow Chart}
+	\centering
+  	\includegraphics[scale=0.3]{FlowChartTodo.pdf}
+\end{frame}
+
+\subsection{Verwendete Funktionen}
+%\include{lib_loaded_random_choice}
+
+\section{Grafische Darstellung}
+
+\end{document}
