@@ -1,0 +1,55 @@
+\include{settings}
+
+\title[BSP28 - Monteur]{Monteur}
+\author{Dickbauer Y., Moser P., Perner M.}
+\institute{PS Computergestützte Modellierung, WS 2016/17}
+%\date{Date of Presentation}
+
+\begin{document}
+
+\begin{frame}
+  \titlepage
+\end{frame}
+
+\begin{frame}{Outline}
+  \tableofcontents
+\end{frame}
+
+\section{Aufgabenstellung}
+\begin{frame}{Aufgabenstellung}
+4 gleichartige, unabhängig voneinander operierende Maschinen werden derzeit von einem
+Monteur betreut. Die Betriebszeiten jeder Maschine zwischen zwei aufeinanderfolgenden
+Ausfällen seien unabhängig und exponentialverteilt mit dem für alle Maschinen gleichen
+Parameter $\lambda$ = $\frac{1}{6}$.
+\\~\\
+Entsprechend seien die Reparaturzeiten der Maschinen unabhängig
+voneinander und jeweils exponentialverteilt mit dem Parameter $\mu$ = 1. Fällt eine Maschine
+aus, so wird sofort mit ihrer Reparatur begonnen, die von genau einem Monteur
+auszufüren ist.
+\\~\\
+Es wird nun überlegt, einen zweiten Monteur anzustellen.
+\end{frame}
+
+\begin{frame}{Aufgabenstellung}
+Vergleichen sie die Auslastungen zwischen der Strategie mit einem Monteur und der Strategie
+mit zwei Monteuren. Wählen Sie selbst sinnvolle Zahlen für Kosten von Stillstand
+und Monteur und bestimmen Sie dadurch die bessere Strategie.
+\vspace{1cm}
+\begin{itemize}
+  \item Eingabe: Feldgröße (Anzahl x, Anzahl y), Ansteckungsrate, optional konfigurierbare Innkubationszeit
+  \item Output: Status der Elemente je Periode, Überlebensrate am Ende
+\end{itemize}
+\end{frame}
+
+\section{Flow Chart}
+\begin{frame}{Flow Chart}
+	\centering
+  	\includegraphics[scale=0.3]{FlowChartTodo.pdf}
+\end{frame}
+
+\subsection{Verwendete Funktionen}
+%\include{lib_loaded_random_choice}
+
+\section{Grafische Darstellung}
+
+\end{document}
