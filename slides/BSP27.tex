@@ -1,0 +1,55 @@
+\include{settings}
+
+\title[BSP27 - Epidemie]{Epidemie}
+\author{Dickbauer Y., Moser P., Perner M.}
+\institute{PS Computergestützte Modellierung, WS 2016/17}
+%\date{Date of Presentation}
+
+\begin{document}
+
+\begin{frame}
+  \titlepage
+\end{frame}
+
+\begin{frame}{Outline}
+  \tableofcontents
+\end{frame}
+
+\section{Aufgabenstellung}
+\begin{frame}{Aufgabenstellung}
+Erstellen Sie ein Simulationsprogramm, das den Ablauf des Epidemie-Beispiels aus dem Theorieteil nachbildet. Beachten Sie, dass die Feldgröße und die Ausbreitungswahrscheinlichkeit konfiguierbar sein müssen. Zusätzlich muss der Nutzer die Anzahl an Startpunkten eingeben können; die Punkte selber können dann zufällig gewählt werden.
+\\~\\
+Die Simulation soll solange laufen, bis es keine infizierten Elemente gibt.
+\end{frame}
+
+\begin{frame}{Aufgabenstellung - Varianten}
+
+\begin{itemize}
+\item[Var 1] Die Ansteckungsrate nimmt von einer Periode zur nächsten um 10\% ab (z.B. von 20\% auf 18\%).
+\vspace{.5cm}
+\item[Var 2] Die Elemente haben eine konfigurierbare Inkubationszeit. Wenn eine Inkubationszeit von 4 Zeiteinheiten eingegeben wird, dann kann ein infiziertes Element über 4 Perioden die benachbarten Elemente ebenfalls infizieren, bevor es selbst tot und nicht mehr ansteckend ist. Sobald ein Element infiziert ist, kann es nicht mehr neu infiziert werden.
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}{Aufgabenstellung - Input/Output}
+
+\begin{itemize}
+  \item Eingabe: Feldgröße (Anzahl x, Anzahl y), Ansteckungsrate, optional konfigurierbare Innkubationszeit
+  \vspace{1cm}
+  \item Output: Status der Elemente je Periode, Überlebensrate am Ende
+\end{itemize}
+\end{frame}
+
+\section{Flow Chart}
+\begin{frame}{Flow Chart}
+	\centering
+  	\includegraphics[scale=0.3]{FlowChartTodo.pdf}
+\end{frame}
+
+\subsection{Verwendete Funktionen}
+%\include{lib_loaded_random_choice}
+
+\section{Grafische Darstellung}
+
+\end{document}
