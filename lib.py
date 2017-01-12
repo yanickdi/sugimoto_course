@@ -14,7 +14,7 @@ def random_std(mean=0, sigma=1):
     return sigma * zz + mean
     
 def random_poisson(lambd):
-    """Returns a poisson distrubed random number"""
+    """Returns a poisson distrubed random number (int)"""
     k = 0
     u_list = []
     middle_value = exp(-lambd)
@@ -36,10 +36,10 @@ def random_binom(n, p):
         z += 1 if rand < p else 0
     return z
     
-def random_exp(lambd):
+def random_exp(mean):
     """Returns an exponential distributed random number"""
     rand = random.random()
-    return -(1/lambd) * log(rand)
+    return -(mean) * log(rand)
     
 def product(list):
     """Returns the product of product of the list"""
