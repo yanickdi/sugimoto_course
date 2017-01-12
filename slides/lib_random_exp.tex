@@ -1,15 +1,16 @@
-\begin{frame}[fragile]{Funktion random\_exp(n, p)}
+\begin{frame}[fragile]{Funktion random\_exp(mean)}
   \begin{columns}
   \column{.49\textwidth}
     \begin{itemize}
   	\item Erzeugt exponential verteilte Zufallszahl
   	\item Gemäß Inversionsmethode:
   	\item $ZZ = -\frac{1}{\lambda} ln(u)$ mit u=R(0,1)
+  	\item mit $\frac{1}{\lambda} = mean$
   \end{itemize}
   \begin{lstlisting}[language=python]
-def random_exp(lambd):
+def random_exp(mean):
     rand = random.random()
-    return -(1/lambd) * log(rand)
+    return -(mean) * log(rand)
 \end{lstlisting}
 \logopythonbottom
   \column{.49\textwidth}
