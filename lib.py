@@ -26,6 +26,32 @@ def random_poisson(lambd):
         if left_side <= middle_value < right_side:
             break
     return k - 1
+    
+class CongruenceGenerator:
+    def __init__(self, n, a, b, m):
+        """
+        a: list of ai, where ai is elem of {0, .., m - 1}, |a| = k
+        b: constant increment, b elem of {0, .., m - 1}
+        n: constant, nr. of remembered last random numbers
+        m: contant nr., m elem of {2, .. inf}
+        """
+        self.n = n; self.a = a; self.b = b; self.m = m
+        self.y = [random.random() for i in range(n)]
+        assert len(self.a) == n
+        for ai in a:
+            assert 0 <= ai <= (m - 1)
+        assert 0 <= b <= m-1
+        assert m >= 2
+        
+    def next_random(self):
+        """ Returns the next random number """
+        rand = 0
+        for k in range(self.n):
+            rand += self.a[k] * self.y[-(k+1)]
+        rand = (rand + self.b) % self.m
+        self.y.pop(0)
+        self.y.append(rand)
+        return rand
         
 def random_binom(n, p):
     """Returns a binomial distributed random number"""
