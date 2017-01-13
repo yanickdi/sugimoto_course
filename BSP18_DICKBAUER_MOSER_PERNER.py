@@ -8,7 +8,7 @@ from lib import user_input, loaded_random_choice, random_number_from_interval
 
 VISITORS = 30
 
-ALTERNATIVE = True
+ALTERNATIVE = False
 ZZ_FIVE, ZZ_TEN = 1, 0
 ALTERNATIVE_LIST = [ZZ_FIVE] * 15 + [ZZ_TEN] * 15
 assert (ALTERNATIVE and VISITORS <= len(ALTERNATIVE_LIST)) or not ALTERNATIVE
