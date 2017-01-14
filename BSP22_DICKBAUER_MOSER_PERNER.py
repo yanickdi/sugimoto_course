@@ -63,7 +63,7 @@ def generate_time_until_next_product():
     return int(random_exp(4) * 60 * SIM_FREQUENCY)
     
 
-def simulate_system(hours):
+def simulate_system(hours, show_plot=False):
     queue = []
     inspection_queue = []
     time_until_next_product = 0
@@ -162,8 +162,24 @@ def simulate_system(hours):
     print('\nc)')
     avg_system_time = (sum_time_product_in_system / nr_finished_system) / (SIM_FREQUENCY * 60)
     print('Average time of a finished product from arriving at the first queue to system finish: {:.2f} minutes'.format(avg_system_time))
-    
-    
+    if show_plot:
+        plot(simulation_iteration_data)
+            
+def plot(data):
+    import matplotlib.pyplot as plt
+    #import seaborn as sns
+    import numpy as np
+    # plot each queue
+    x = np.arange(0, len(data))
+    queue_length = [data[i]['queue_length'] for i in x]
+    insp_queue = [data[i]['inspection_queue_length'] for i in x]
+    plt.plot(x, queue_length, label='Queue length')
+    plt.plot(x, insp_queue, label='Insp. Queue length')
+    plt.legend(loc='upper left')
+    #plt.ylabel('')
+    plt.xlabel('Iteration')
+    plt.ylim([0, 10])
+    plt.show()
     
 def main():
     print('Starting the warming phase (8 hours):\n')
@@ -171,7 +187,7 @@ def main():
     
     for i in range(5): print()
     print('Starting the real simulation (800h):')
-    simulate_system(800)
+    simulate_system(800, show_plot=False)
 main()
 
 

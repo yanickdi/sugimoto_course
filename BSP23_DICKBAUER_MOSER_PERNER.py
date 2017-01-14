@@ -27,12 +27,12 @@ class Product:
            self.time_per_machine = NORMAL_PROCESSING_TIME_PER_MACHINE
         self.remaining_t_on_m = self.time_per_machine
 
-def simulate_assembly_line(minutes, nr_machines, buffer_size, print_every_step=True):
+def simulate_assembly_line(minutes, nr_machines, buffer_size, print_every_step=True, show_plot=False):
     nr_jobs_created = 0
     nr_jobs_finished = 0
     simulation_iteration_data = []
     
-    # create buffers (empty queues) before each machines:
+    # create buffers (empty queues) before each machine:
     buffers = [[] for i in range(nr_machines)]
     # create empty processing lists for each machine:
     machines_act_job = [None for i in range(nr_machines)]
@@ -119,13 +119,32 @@ def simulate_assembly_line(minutes, nr_machines, buffer_size, print_every_step=T
         print('Cumulated idle time of machine {}: {} seconds'.format(i+1, cum_idle_time))
         print('Average queue length before machine {}: {:.3f}'.format(i, avg_queue_length))
         print()
+    if show_plot:
+        plot(simulation_iteration_data, nr_machines)
+        
+def plot(simulation_iteration_data, nr_machines):
+    import matplotlib.pyplot as plt
+    import seaborn as sns
+    import numpy as np
+    # plot each queue
+    x = np.arange(0, len(simulation_iteration_data))
+    for mach in range(nr_machines):
+        y = []
+        # create an queue length list:
+        for i in x:
+            y.append(simulation_iteration_data[i]['queue_length'][mach])
+        plt.plot(x, y, label='Queue before #{}'.format(mach+1))
+    plt.legend(loc='upper left')
+    plt.ylabel('Nr. of waiting products')
+    plt.xlabel('Iteration')
+    plt.show()
 
 
 def main ():
     print('Simulation without buffer between machines: ')
-    simulate_assembly_line(SIMULATION, NO_MACHINES, buffer_size=0, print_every_step=PRINT_EVERY_STEP)
+    simulate_assembly_line(SIMULATION, NO_MACHINES, buffer_size=0, print_every_step=PRINT_EVERY_STEP, show_plot=False)
     print('\n')
     print('Simulation with unlimited buffer between machines: ')
-    simulate_assembly_line(SIMULATION, NO_MACHINES, buffer_size=sys.maxsize, print_every_step=PRINT_EVERY_STEP)
+    simulate_assembly_line(SIMULATION, NO_MACHINES, buffer_size=sys.maxsize, print_every_step=PRINT_EVERY_STEP, show_plot=False)
 
 main()
