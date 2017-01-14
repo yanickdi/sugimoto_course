@@ -80,6 +80,12 @@ def random_choice(choices):
     number_of_elements = len(choices)
     random_position = int(random_number_from_interval(0, number_of_elements))
     return choices[random_position]
+
+def random_choice_and_pop(choices):
+    """This function takes a list of choices and randomly pops one out of it and returns the element"""
+    number_of_elements = len(choices)
+    random_position = int(random_number_from_interval(0, number_of_elements))
+    return choices.pop(random_position)
     
     
 def loaded_random_choice(probability_list):
