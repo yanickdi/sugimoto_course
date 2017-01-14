@@ -6,12 +6,13 @@
 from lib import user_input, create_matrix, random_choice_and_pop, loaded_random_choice
 
 DEBUG = True
+SHOW_PLOT = True
 
 # option constants:
 OPTION_INFECTION_RATE = 0
 OPTION_INCUBATION_TIME = 1
 
-INFECTION_RATE_DECREASING_VAL = .1 # start rate decreases by 10 % each step
+INFECTION_RATE_DECREASING_VAL = .10 # start rate decreases by 10 % each step
 
 # some status constants:
 ALIVE = 1
@@ -61,32 +62,15 @@ def check_field_status(field):
         elif status == INFECTED: nr_infected += 1
     return {'nr_alive' : nr_alive, 'nr_infected' : nr_infected, 'nr_dead' : nr_dead}
                 
-def simulate(size, nr_start_points, option, option_data):
+
+def check_change_infected_to_dead(field, point, option, option_data):
+    """ This function changes an infected unit to dead if its infected_since dead is greated than the entered
+        maximum value, but only if this option is enabled
     """
-    The implementation of the epidemic simulation
-    
-    option_data: infection rate or incubation time - depends on option_data
-    """
-    field = create_field(size[0], size[1])
-    random_infect(field, nr_start_points)
-    iterations = 0
-    
-    # simulate until there is no living unit any more
-    while check_field_status(field)['nr_alive'] > 0:
-        iterations += 1
-        # copy the field of the actual iteration
-        next_field = copy_field(field)
-        # iterate over all infected units of the actual field:
-        for inf_x, inf_y in infected(field):
-            for neighb_x, neighb_y in alive_neighbours(field, (inf_x,inf_y)):
-                # this neighbour is a candidate, try to infect her:
-                do_infect = is_contact_positive(option, option_data, field[inf_x][inf_y]['infected_since'])
-                if do_infect:
-                    infect_unit(field, (neighb_x, neighb_y))
-                pass
-            
-        if iterations >= 1:
-            break
+    x, y = point[0], point[1]
+    if option == OPTION_INCUBATION_TIME:
+        if field[x][y] >= option_data:
+            field[x][y]['status'] = DEAD
             
 def is_contact_positive(option, option_data, infected_since):
     """
@@ -114,9 +98,11 @@ def alive_neighbours(field, point):
         if x == neighbour_x and y == neighbour_y: continue
         if neighbour_x < 0 or neighbour_x >= len(field): continue
         if neighbour_y < 0 or neighbour_y >= len(field[x]): continue
+        # filter others than alive
+        if field[neighbour_x][neighbour_y]['status'] != ALIVE: continue
         yield neighbour_x, neighbour_y
-    else:
-        return []
+    # no neighbour 
+    return []
     
             
 def x_y_combinations(field):
@@ -145,17 +131,87 @@ def copy_field(field):
         new_field[x][y] = new_unit
     return new_field
 
+def simulate(size, nr_start_points, option, option_data):
+    """
+    The implementation of the epidemic simulation
+    
+    option_data: infection rate or incubation time - depends on option_data
+    """
+    field = create_field(size[0], size[1])
+    random_infect(field, nr_start_points)
+    iterations = 0
+    it_data = [] # a list that contains each iterations data for later evaluation
+    
+    # simulate until there is no living unit any more
+    while check_field_status(field)['nr_alive'] > 0:
+        iterations += 1
+        # copy the field of the actual iteration
+        next_field = copy_field(field)
+        # iterate over all infected units of the actual field:
+        for inf_x, inf_y in infected(field):
+            # we may infect others:
+            for neighb_x, neighb_y in alive_neighbours(field, (inf_x,inf_y)):
+                # maybe this one is infected at the next iteration already (because of another infected)
+                if next_field[neighb_x][neighb_y]['status'] != ALIVE:
+                    # this one should not dead!
+                    assert next_field[neighb_x][neighb_y]['status'] != DEAD
+                    # and also, its date should be zero
+                    assert next_field[neighb_x][neighb_y]['infected_since'] == 0
+                    continue
+                # this neighbour is a candidate, try to infect her:
+                do_infect = is_contact_positive(option, option_data, field[inf_x][inf_y]['infected_since'])
+                
+                if do_infect:
+                    # ok, this unit is infected at the next iteration
+                    infect_unit(next_field, (neighb_x, neighb_y))
+            # increase infected_since, and may change our state to DEAD:
+            next_field[inf_x][inf_y]['infected_since'] += 1
+            check_change_infected_to_dead(field, (inf_x, inf_y), option, option_data)
+        # save some data
+        it_data.append(check_field_status(field))
+        # this iteration is over, swap the fields:
+        field = next_field
+    return it_data
+
+
+def plot(data):
+    import numpy as np
+    import matplotlib.pyplot as plt
+    import seaborn as sns
+    
+    x = np.arange(0, len(data))
+    nr_alive = [it['nr_alive'] for it in data]
+    nr_infected = [it['nr_infected'] for it in data]
+    nr_dead = [it['nr_dead'] for it in data]
+    incr_infected = [(nr_infected[i]/nr_infected[i-1]-1) for i in x[1:]]
+    
+    
+    sns.set_style('whitegrid')
+    fig, ax1 = plt.subplots()
+    ax1.plot(x[1:], incr_infected, linestyle='dotted', label='Increase Infected')
+    ax1.legend(loc='upper left')
+    
+    ax2 = ax1.twinx()
+    ax2.plot(x, nr_alive, label='Alive')
+    ax2.plot(x, nr_infected, label='Infected')
+    ax2.plot(x, nr_dead, label='Dead')
+    ax2.legend(loc='upper right')
+    
+    
+    plt.xlabel('Iteration')
+    plt.show()
+    
 def main():
     # get user input:
     size_x, size_y, nr_start_points, option = user_input([
-        ('Field size x', int, 20), 
-        ('Field size y', int, 20), 
+        ('Field size x', int, 30), 
+        ('Field size y', int, 30), 
         ('Amount of start points', int, 2),
         ('Variant Decreasing injection rate [type a] or variant Incubation time [type b]', str, 'a')], DEBUG)
     if option == 'a':
         option = OPTION_INFECTION_RATE
         option_data, = user_input([
-            ('You selected variant a) The injection rate decreases each period by 10%. Start rate in %', int, 50)], DEBUG)
+            ('You selected variant a) The injection rate decreases each period by 10%. Start rate in %', int, 20)], DEBUG)
         option_data /= 100
     else:
         option = OPTION_INCUBATION_TIME
@@ -163,6 +219,10 @@ def main():
             ('You selected variant b) Incubation time', int, 4)], DEBUG)
     
     # do the simulation
-    simulate([size_x, size_y], nr_start_points, option, option_data)
+    data = simulate([size_x, size_y], nr_start_points, option, option_data)
+    
+    # plot the result
+    if SHOW_PLOT:
+        plot(data)
     
 main()
