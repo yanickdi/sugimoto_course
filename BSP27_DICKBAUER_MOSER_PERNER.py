@@ -69,7 +69,7 @@ def check_change_infected_to_dead(field, point, option, option_data):
     """
     x, y = point[0], point[1]
     if option == OPTION_INCUBATION_TIME:
-        if field[x][y] >= option_data:
+        if field[x][y]['infected_since'] >= option_data['inc_time']:
             field[x][y]['status'] = DEAD
             
 def is_contact_positive(option, option_data, infected_since):
@@ -81,10 +81,14 @@ def is_contact_positive(option, option_data, infected_since):
     """
     if option == OPTION_INFECTION_RATE:
         # infection rate is increasing
-        infection_start_rate = option_data
-        infection_rate = infection_start_rate * (1 - INFECTION_RATE_DECREASING_VAL )** infected_since
-    else:
-        raise NotImplementedError()
+        infection_start_rate = option_data['start_rate']
+        if infected_since == 0:
+            infection_rate = infection_start_rate
+        else:
+            infection_rate = infection_start_rate * (1 - INFECTION_RATE_DECREASING_VAL )**infected_since
+    elif option == OPTION_INCUBATION_TIME:
+        assert infected_since < option_data['inc_time']
+        infection_rate = option_data['fixed_rate']
     
     probs = [infection_rate, 1 - infection_rate] # to be infected or not
     return [True, False][loaded_random_choice(probs)]
@@ -131,6 +135,18 @@ def copy_field(field):
         new_field[x][y] = new_unit
     return new_field
 
+def stop_criteria(field):
+    """ Returns True if the simulation should stop """
+    field_status = check_field_status(field)
+    n = len(field) * len(field[0])
+    if field_status['nr_alive'] < n:
+        # simulation is running:
+        if field_status['nr_alive'] <= 0:
+            return True
+        if field_status['nr_infected'] <= 0:
+            return True
+    return False
+    
 def simulate(size, nr_start_points, option, option_data):
     """
     The implementation of the epidemic simulation
@@ -143,7 +159,7 @@ def simulate(size, nr_start_points, option, option_data):
     it_data = [] # a list that contains each iterations data for later evaluation
     
     # simulate until there is no living unit any more
-    while check_field_status(field)['nr_alive'] > 0:
+    while not stop_criteria(field):
         iterations += 1
         # copy the field of the actual iteration
         next_field = copy_field(field)
@@ -166,15 +182,16 @@ def simulate(size, nr_start_points, option, option_data):
                     infect_unit(next_field, (neighb_x, neighb_y))
             # increase infected_since, and may change our state to DEAD:
             next_field[inf_x][inf_y]['infected_since'] += 1
-            check_change_infected_to_dead(field, (inf_x, inf_y), option, option_data)
+            check_change_infected_to_dead(next_field, (inf_x, inf_y), option, option_data)
         # save some data
         it_data.append(check_field_status(field))
         # this iteration is over, swap the fields:
+        del field
         field = next_field
     return it_data
 
 
-def plot(data):
+def plot(data, option, option_data):
     import numpy as np
     import matplotlib.pyplot as plt
     import seaborn as sns
@@ -189,16 +206,23 @@ def plot(data):
     sns.set_style('whitegrid')
     fig, ax1 = plt.subplots()
     ax1.plot(x[1:], incr_infected, linestyle='dotted', label='Increase Infected')
-    ax1.legend(loc='upper left')
+    ax1.legend(loc='center left')
+    ax1.set_xlabel('Iterations')
+    ax1.set_ylabel('Rate')
     
     ax2 = ax1.twinx()
     ax2.plot(x, nr_alive, label='Alive')
     ax2.plot(x, nr_infected, label='Infected')
     ax2.plot(x, nr_dead, label='Dead')
     ax2.legend(loc='upper right')
+    ax2.set_ylabel('Units')
     
+    if option == OPTION_INFECTION_RATE:
+        title = 'Var 1: Decreasing Infection Rate, [start_rate={:.0f}%,dec_rate={:.0f}%]'.format(option_data['start_rate']*100, INFECTION_RATE_DECREASING_VAL*100)
+    else:
+        title = 'Var 2: Incubation Time, [fixed_rate={:.0f}%,inc_time={}]'.format(option_data['fixed_rate']*100, option_data['inc_time'])
+    plt.title(title)
     
-    plt.xlabel('Iteration')
     plt.show()
     
 def main():
@@ -207,22 +231,28 @@ def main():
         ('Field size x', int, 30), 
         ('Field size y', int, 30), 
         ('Amount of start points', int, 2),
-        ('Variant Decreasing injection rate [type a] or variant Incubation time [type b]', str, 'a')], DEBUG)
+        ('Variant Decreasing injection rate [type a] or variant Incubation time [type b]', str, 'b')], DEBUG)
     if option == 'a':
         option = OPTION_INFECTION_RATE
-        option_data, = user_input([
+        start_rate, = user_input([
             ('You selected variant a) The injection rate decreases each period by 10%. Start rate in %', int, 20)], DEBUG)
-        option_data /= 100
+        start_rate /= 100
+        option_data = {'start_rate' : start_rate}
     else:
         option = OPTION_INCUBATION_TIME
-        option_data, = user_input([
+        inc_time, = user_input([
             ('You selected variant b) Incubation time', int, 4)], DEBUG)
+        fixed_rate, = user_input([
+            ('Probabilty to infect contacted neighbours in %', int, 20)], DEBUG)
+        fixed_rate /= 100
+        option_data = {'fixed_rate' : fixed_rate, 'inc_time' : inc_time}
+        
     
     # do the simulation
     data = simulate([size_x, size_y], nr_start_points, option, option_data)
     
     # plot the result
     if SHOW_PLOT:
-        plot(data)
+        plot(data, option, option_data)
     
 main()
