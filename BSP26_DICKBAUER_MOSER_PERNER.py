@@ -5,8 +5,10 @@
 """
 from math import exp
 from lib import random_std
+from copy import copy
 
 PRINT_BASKET_EACH_ITERATION = True
+PLOT = False
 
 VOLATILITY = {
                'Alianz' : .352,
@@ -19,6 +21,7 @@ VOLATILITY = {
 	            'Intel' : .323,
 	           'Lloyds' : .234,
 	        'Microsoft' : .246}
+          
 
 NR_PERIODS = 5
 MARKET_INTEREST_RATE = .03
@@ -108,13 +111,28 @@ def print_basket(share_prices):
 def net_present_value(certificate, t):
     """ calculates the sum of all discounted cash flows until t=`t`"""
     return sum(certificate['cash_flow_in_period'][i] / (1+RISK_FREE_INTEREST_RATE)**i for i in range(t+1))
-        
+
+def plot(it_data):
+    import matplotlib.pyplot as plt
+    import seaborn
+    
+    # plot each share
+    for name in sorted(VOLATILITY.keys()):
+        prices = [(it['share_prices'][name]-1)*100 for it in it_data]
+        plt.plot(prices, label=name)
+    plt.legend(loc='upper left')
+    plt.title('Simulated performance of underlyings')
+    plt.xlabel('iteration')
+    plt.ylabel('performance in %')
+    plt.show()
+    
 def main():
     share_prices = { name: 1 for name in VOLATILITY.keys()}
     certificate = {
         'cash_flow_in_period' : [],
         'underlyings' : {name : 1 for name in share_prices.keys()},
         'initial_prices' : { name: share_prices[name] for name in share_prices.keys()}}
+    it_data = []
     
     for t in range(6):
         cash_flow = calc_period_cash_flow(t, certificate, share_prices)
@@ -127,7 +145,13 @@ def main():
         print('Cash-Flow at t={}: {:+f}'.format(t, certificate['cash_flow_in_period'][t]))
         print('NPV of Certificate: {:.2f}\n\n'.format(npv))
         
-        # change share prices for next iteration
-        simulate_share_price_change(share_prices, t)
+        # iteration finished, save some data for plotting it later
+        it_data.append({'share_prices' : copy(share_prices)})
 
+        # change share prices for next iteration
+        if t <= 5: simulate_share_price_change(share_prices, t)
+    
+    if PLOT:
+        plot(it_data)
+        
 main()
