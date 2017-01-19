@@ -74,6 +74,20 @@ def product(list):
         p *= i
     return p
     
+def get_chi_squared(df, alpha):
+    with open('chi_squared_table.csv') as f:
+        # first line is header
+        line = list(map(float, f.readline().strip().split(';')[1:]))
+        if alpha not in line:
+            raise RuntimeError('alpha value is not in chi_squared_table')
+        col_of_alpha = line.index(alpha)+1
+        for line in f:
+            line = list(map(float, line.strip().split(';')))
+            # first col is df
+            if int(line[0]) == df:
+                return line[col_of_alpha]
+    raise RuntimeError('df value ({}) is not in chi_squared_table'.format(df))
+    
 
 def random_choice(choices):
     """This function takes a list of choices and randomly picks one out of it and returns the element"""
@@ -125,6 +139,13 @@ def euclidean_distance(point_1, point_2):
     delta_x = point_2[0] - point_1[0]
     delta_y = point_2[1] - point_1[1]
     return (delta_x ** 2 + delta_y ** 2) ** 0.5
+    
+def fact(number):
+    """ Returns the factorial of number """
+    prod = 1
+    for i in range(1, number+1):
+        prod *= i
+    return prod
     
     
 def print_matrix(matrix, ndigits_round=2):

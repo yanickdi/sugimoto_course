@@ -12,7 +12,7 @@ LOTTERY_MIN_VALUE = 1
 LOTTERY_MAX_NUMBER = 45
 LOTTO_FULL_MATCH = 6
 
-from lib import random_choice, user_input
+from lib import random_choice, user_input, fact
 
 def main():
     # user input:
@@ -64,11 +64,6 @@ def check_lottery_ticket(right_numbers, check_ticket):
             equal_numbers.append(check_number)
     return len(equal_numbers), equal_numbers
 
-def fact(number):
-    prod = 1
-    for i in range(1, number+1):
-        prod *= i
-    return prod
 
 def bin_coeff(n, k):
     """returns binomialcoefficent of (n over k)"""
