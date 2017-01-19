@@ -3,11 +3,12 @@
     Dickbauer Yanick 1030489, Moser Patrick 1114954, Perner Manuel 0633155
     WS 2016
 """
-from lib import random_exp
+from lib import random_exp, user_input
 
 NR_MACHINES = 4
-FREQUENCY = 2 # simulation steps per hour
+FREQUENCY = 10 # simulation steps per hour
 SIM_DURATION = 1000 # hour of simulation
+
 
 STATE_MECHANIC_IDLE = 'drinking coffee'
 STATE_MECHANIC_REPAIRING = 'repairing'
@@ -30,7 +31,7 @@ def create_failure_free_time():
 
 def create_repair_time():
     # mean is 1
-    mean = 6
+    mean = 1
     while True:
         time = int(random_exp(mean) * FREQUENCY)
         if time != 0:
@@ -124,6 +125,15 @@ def simulate(nr_mechanics):
     #print(utilization_mechanics)
     return it_data
 
+def costs(it_data, nr_mechanics, cost_downtime, labor_costs):
+    #mechanics costs:
+    print('Sum of labor costs with {} mechnics:'.format(nr_mechanics),SIM_DURATION * nr_mechanics * labor_costs)
+    downtime = sum(NR_MACHINES - it['nr_machines_working'] for it in it_data) / FREQUENCY
+    print('Sum of downtime costs with {} mechanics:'.format(nr_mechanics) ,downtime * cost_downtime)
+    total_costs = (SIM_DURATION * nr_mechanics * labor_costs) + (downtime * cost_downtime)
+    print('Total costs with {} mechanics:'.format(nr_mechanics), total_costs)
+    
+
 def plot(sim_data):
     import matplotlib.pyplot as plt
     import seaborn
@@ -146,8 +156,11 @@ def plot(sim_data):
     
 
 def main():
+    cost_downtime, labor_costs = user_input([('Define the downtime costs per hour', int, 1000), ('Define the labor costs per hour of the mechanics', int, 50)])
     data_sim_1 = simulate(1)
     data_sim_2 = simulate(2)
+    costs(data_sim_1, 1, cost_downtime, labor_costs)
+    costs(data_sim_2, 2, cost_downtime, labor_costs)
     if SHOW_PLOT:
         plot([{'nr_mechanics' : 1, 'data' : data_sim_1}, {'nr_mechanics': 2, 'data': data_sim_2}])
     
