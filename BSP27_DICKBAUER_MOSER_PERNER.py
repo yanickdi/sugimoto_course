@@ -5,7 +5,7 @@
 """
 from lib import user_input, create_matrix, random_choice_and_pop, loaded_random_choice
 
-DEBUG = True
+DEBUG = False
 SHOW_PLOT = True
 
 # option constants:
@@ -231,11 +231,11 @@ def main():
         ('Field size x', int, 30), 
         ('Field size y', int, 30), 
         ('Amount of start points', int, 2),
-        ('Variant Decreasing injection rate [type a] or variant Incubation time [type b]', str, 'b')], DEBUG)
+        ('Variant Decreasing infection rate [type a] or variant Incubation time [type b]', str, 'b')], DEBUG)
     if option == 'a':
         option = OPTION_INFECTION_RATE
         start_rate, = user_input([
-            ('You selected variant a) The injection rate decreases each period by 10%. Start rate in %', int, 20)], DEBUG)
+            ('You selected variant a) The infection rate decreases each period by 10%. Start rate in %', int, 20)], DEBUG)
         start_rate /= 100
         option_data = {'start_rate' : start_rate}
     else:
