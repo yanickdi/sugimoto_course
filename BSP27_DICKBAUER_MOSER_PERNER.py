@@ -194,7 +194,8 @@ def simulate(size, nr_start_points, option, option_data):
 def plot(data, option, option_data):
     import numpy as np
     import matplotlib.pyplot as plt
-    import seaborn as sns
+    try: import seaborn as sns; sns.set_style('whitegrid')
+    except: pass
     
     x = np.arange(0, len(data))
     nr_alive = [it['nr_alive'] for it in data]
@@ -203,7 +204,6 @@ def plot(data, option, option_data):
     incr_infected = [(nr_infected[i]/nr_infected[i-1]-1) for i in x[1:]]
     
     
-    sns.set_style('whitegrid')
     fig, ax1 = plt.subplots()
     ax1.plot(x[1:], incr_infected, linestyle='dotted', label='Increase Infected')
     ax1.legend(loc='center left')
