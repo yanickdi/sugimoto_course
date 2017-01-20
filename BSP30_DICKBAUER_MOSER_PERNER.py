@@ -8,16 +8,16 @@ from itertools import chain # this import from python's stdlibrary
 from lib import random_exp
 
 FREQUENCY = 1 # simulations per minute
-SIM_DURATION = 100
+SIM_DURATION = 10
 NR_SIM_STEPS = int(FREQUENCY * SIM_DURATION)
 
-CUST_TYPE_NORMAL = 0
-CUST_TYPE_EXPRESS = 1
+NORMAL = 'normal'
+EXPRESS = 'express'
 
-def generate_next_customer_time(cust_type):
-    if cust_type == CUST_TYPE_NORMAL:
+def generate_next_customer_arrival(cust_type):
+    if cust_type == NORMAL:
         rand = random_exp(3)
-    elif cust_type == CUST_TYPE_EXPRESS:
+    elif cust_type == EXPRESS:
         rand = random_exp(5)
     time = int(rand * FREQUENCY)
     if time == 0:
@@ -26,9 +26,9 @@ def generate_next_customer_time(cust_type):
     return time
     
 def generate_service_time(cust_type):
-    if cust_type == CUST_TYPE_NORMAL:
+    if cust_type == NORMAL:
         rand = random_exp(5)
-    elif cust_type == CUST_TYPE_EXPRESS:
+    elif cust_type == EXPRESS:
         rand = random_exp(3)
     time = int(rand * FREQUENCY)
     if time == 0:
@@ -55,21 +55,27 @@ def check_cash_desk(queues, rem_service_times):
 
 def check_new_arrivals(next_arrivals, queues):
     def _best_queue(type, queue):
-        if type = 'normal':
+        if type == NORMAL:
             # this customer can only choose between normal queues
-            possible_queues = queues['normal']
-        elif type = 'express':
+            possible_queues = queues[NORMAL]
+        elif type == EXPRESS:
             # this customer can choose between normal queues and of course - express queues
-            possible_queues = chain(queues['normal'], queues['express'])
-        # TODO: look up the shortest queue and return it
+            possible_queues = chain(queues[EXPRESS], queues[NORMAL])
+        # now lookup the shortest queue
+        return min(possible_queues, key=lambda q: len(q))
     
     for type, arrival in next_arrivals.items():
         if arrival == 0:
-            # a new customer of type `type` arrived - add it to best queue
+            print('customer of type {} arrived'.format(type))
+            # a new customer of type `type` arrived - add her to best queue
+            shortest_queue = _best_queue(type, queues)
+            shortest_queue.append(type)
+            # create a new arrival:
+            next_arrivals[type] = generate_next_customer_arrival(type)
     
 def print_status(t, queues, rem_service_times):
     print('Iteration :{}'.format(t))
-    for type in ('normal', 'express'):
+    for type in (NORMAL, EXPRESS):
         for desk_nr in range(len(queues[type])):
             queue = queues[type][desk_nr]
             rem_time = rem_service_times[type][desk_nr]
@@ -81,13 +87,14 @@ def print_status(t, queues, rem_service_times):
     
 def simulate_cash_desks(nr_normal_desk, nr_expess_desk):
     # initialize empty queues for each desk
-    types = [('normal', nr_normal_desk), ('express', nr_expess_desk)]
+    types = [(NORMAL, nr_normal_desk), (EXPRESS, nr_expess_desk)]
     queues  = {key: [[] for i in range(nr)] for key, nr in types}
     rem_service_times = {key: [None for i in range(nr)] for key, nr in types}
     next_arrivals = {key: 0 for key, nr in types} # at the beginning of sim, two arrivals!
     
     for t in range(NR_SIM_STEPS):
         # check new arrivals:
+        check_new_arrivals(next_arrivals, queues)
         
         # check desks if one is idle or just finished a customer
         check_cash_desk(queues, rem_service_times)
