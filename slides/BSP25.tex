@@ -30,10 +30,43 @@ Die Berechnung der Häufigkeiten ($\chi^2-Anpassungstest$) und Run-Länge, der z
 \end{itemize}
 \end{frame}
 
-\section{Flow Chart}
-\begin{frame}{Flow Chart}
-	\centering
-  	\includegraphics[scale=0.3]{FlowChartTodo.pdf}
+\section{Erklärung}
+\begin{frame}{$\chi^2-Anpassungstest$ - gemischte Kongruenzmethode}
+	\begin{enumerate}
+		\item Input n … Number of Random Numbers generated
+		\item Classification into $\sqrt{n}$ classes of uniform size
+		\item Calculate the frequency of random number in each class
+		\item Calculate test statistic as the sum over all classes $\frac{(n_i - np)^2}{np}$
+		\item Compare test statistic with rejection value from $\chi^2$ Table
+		\item If X0 (test statistic) $\leftarrow$ reject value 
+		\item random numbers are significantly independent
+	\end{enumerate}
+\end{frame}
+
+\begin{frame}{Beispiel}
+	\begin{itemize}
+		\item $n = 100$
+		\item $r = \sqrt{100} = 10 classes$
+		\item $u_i = 0.34 \Rightarrow$ is beeing counted to class 4 $(0.34 - 0.4)$
+		\item test statistic with all classes
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Runtest}
+	\begin{enumerate}
+		\item Input: n = number of Runs
+		\item a run is defined as $u_i$ (random numbers) that follow the order of being greater than the $u_{i-1}$
+		\begin{itemize}
+			\item e.g. $u_1 = 0.15, u_2 = 0.3, u_3 = 0.25$
+		\end{itemize}
+		\item Run in this case is 2
+		\item Create classes according to length of run (here create class 2)
+		\item Count number of run occurrances in each class
+		\item Calculate $\chi_0 = \frac{1}{len(classes)!} - \frac{1}{(len(classes)+1)!}$
+		\item Calculate $n * \chi$
+		\item for test statistic calculate sum over all classes (length of class – np)/np 
+		\item Test it the same way as before
+	\end{enumerate}
 \end{frame}
 
 \subsection{Verwendete Funktionen}
