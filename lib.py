@@ -75,6 +75,7 @@ def product(list):
     return p
     
 def get_chi_squared(df, alpha):
+    """ Looks up the chi squared value in the csv file - df: degrees of freedom"""
     with open('chi_squared_table.csv') as f:
         # first line is header
         line = list(map(float, f.readline().strip().split(';')[1:]))
