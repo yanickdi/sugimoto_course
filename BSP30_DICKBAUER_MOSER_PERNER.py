@@ -51,6 +51,18 @@ def check_cash_desk(queues, rem_service_times):
                     next_service_time = generate_service_time(next_customer_type)
                     rem_service_times[desk_type][desk_nr] = next_service_time
     
+def print_status(t, queues, rem_service_times):
+    print('Iteration :{}'.format(t))
+    for type in ('normal', 'express'):
+        for desk_nr in range(len(queues[type])):
+            queue = queues[type][desk_nr]
+            rem_time = rem_service_times[type][desk_nr]
+            rem_time_str = 'no customer' if rem_time is None else str(rem_time)
+            print('  {} desk #{}'.format(type, desk_nr+1))
+            print('     queue length: {}'.format(len(queue)))
+            print('     rem_service_time of actual customer: {}'.format(rem_time_str))
+    print()
+    
 def simulate_cash_desks(nr_normal_desk, nr_expess_desk):
     # initialize empty queues for each desk
     types = [('normal', nr_normal_desk), ('express', nr_expess_desk)]
@@ -61,6 +73,8 @@ def simulate_cash_desks(nr_normal_desk, nr_expess_desk):
         # check desks if one is idle or just finished a customer
         check_cash_desk(queues, rem_service_times)
         
+        
+        print_status(t, queues, rem_service_times)
         # finished iteration, decrease all times:
         for rem_time_list in rem_service_times.values():
             for i, time in enumerate(rem_time_list):
