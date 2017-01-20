@@ -42,8 +42,53 @@ Kunden, die wegen der fehlenden Wartemöglichkeit verloren gehen, wenn
 \section{Flow Chart}
 \begin{frame}{Flow Chart}
 	\centering
-  	\includegraphics[scale=0.3]{FlowChartTodo.pdf}
+  	\includegraphics[scale=0.22]{BSP24_FlowChart.pdf}
 \end{frame}
+
+\section{Erklärung}
+\begin{frame}[fragile]{Phase I: Check Machine}
+	\begin{itemize}
+		\item Wenn remaining\_time\_in\_machine == 0:
+		\begin{itemize}
+			\item Auto fertig $\Rightarrow$ departures += 1
+		\end{itemize}
+		\item Wenn queue $>$ 0:
+		\begin{itemize}
+			\item Auto kommt in Waschanlage
+			\item remaining\_time\_in\_machine = create\_processing\_time()
+		\end{itemize}
+	\end{itemize}
+  \begin{lstlisting}[language=python]
+def create_processing_time():
+    # the processing time is exponential distributed with an exp val of 3 min.
+    p_time = int(round(random_exp(3) * SIM_FREQUENCY, 0))
+    if p_time == 0:
+        p_time = 1
+        print('Warning: processing time would be zero, increase simulation frequency!')
+    return p_time
+  \end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{Phase II: Check Arrivals}
+	\begin{itemize}
+		\item if next\_arrival == 0 
+		\begin{itemize}
+			\item Wenn Maschine frei $\Rightarrow$ sende Auto direkt in Waschanlage
+			\item Wenn nicht frei $\Rightarrow$ sende Auto in die Queue (wenn max capacity queue noch nicht erreicht)
+		\end{itemize}
+		\item next\_arrival = create\_next\_arrival()
+	\end{itemize}
+  \begin{lstlisting}[language=python]
+def create_arrival_time():
+    # the next customer arrives after an average time of 4 minutes
+    arr_time = int(round(random_poisson(4) * SIM_FREQUENCY, 0))  # (poisson distributed)
+    if arr_time == 0:
+        arr_time = 1
+        print('Warning: arr_time would be zero, increase simulation frequency!')
+    return arr_time
+  \end{lstlisting}
+\end{frame}
+
 
 \subsection{Verwendete Funktionen}
 %\include{lib_loaded_random_choice}
