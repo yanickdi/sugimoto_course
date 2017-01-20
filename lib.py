@@ -153,6 +153,11 @@ def print_matrix(matrix, ndigits_round=2):
     for line in matrix:
         print(''.join(['{:7}'.format(round(elem, ndigits_round)) for elem in line]))
         
+def _dbg(str, debug_mode=True):
+    """prints the str to stdout if debug_mode is true"""
+    if debug_mode:
+        print(str)
+        
         
 def user_input(input_vars, use_defaults=False):
     """
